@@ -1,6 +1,4 @@
-# Título: Nightmare: Stay Alive
-
-Modifica este archivo con la información del documento de especificación
+Nightmare: Stay Alive
 
 | Documento de Especificación |   |
 |-----------------------------|---|
