@@ -1,4 +1,4 @@
-# Título: plantilla-proyecto
+# Título: Nightmare: Stay Alive
 
 Modifica este archivo con la información del documento de especificación
 
@@ -7,11 +7,12 @@ Modifica este archivo con la información del documento de especificación
 | Fecha de elaboración        |   |
 | Versión                     |   |
 
-**Nombre del juego**:
+**Nombre del juego**: Nightmare: Stay Alive
 
-**Descripción del juego**: (describir brevemente de que se trata el juego)
+**Descripción del juego**: Shooter 2-D con vista superior basado en el combate con oleadas de infectados, supervivencia del personaje 
+y superacion de niveles.
 
-**Descripción del jugador**: (es decir a quien va dirigido el juego, en cuanto a edad, genero, preferencias, etc.)
+**Descripción del jugador**: Dirigido a un publico +13 cuya preferencia sea el shooter, juegos de zombies, supervivencia, accion.
 
 **Descripción del lugar o espacio donde transcurre el juego**: (agregar una imagen ejemplificativa)
 
