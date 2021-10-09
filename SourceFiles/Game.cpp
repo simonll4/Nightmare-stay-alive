@@ -40,6 +40,9 @@ void Game::render() {
     this->window->clear();
 
     //Render items
+    //mapa1.get_sprite().setScale((float)(window->getSize().x)/(float)(mapa1.get_texture().getSize().x),(float)(window->getSize().y)/(float)(mapa1.get_texture().getSize().y));
+    mapa1.get_sprite().setScale(1.0f,1.0f);
+
 
     this->window->draw(mapa1.get_sprite());
 
