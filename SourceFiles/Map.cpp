@@ -7,9 +7,11 @@ Map::Map(){
 
  sMap = new sf::Sprite;
 
- tMap->loadFromFile("assets/mapaprueba.png");
+ tMap->loadFromFile("../assets/mapa1.png");
 
  sMap->setTexture(*tMap);
+
+ sMap->setOrigin(1600.f,1400.f);
 
 }
 

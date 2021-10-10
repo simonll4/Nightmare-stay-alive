@@ -1,8 +1,5 @@
 #include "../Headers/Game.h"
 
-
-
-
 //Inicializadores
 void Game::initializeWindow() {
     this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Nightmare!");
@@ -33,6 +30,7 @@ void Game::SFMLUpdateEvents() {
 void Game::update() {
 
     this->SFMLUpdateEvents();
+    this->player1.update();
 }
 
 void Game::render() {
@@ -40,14 +38,15 @@ void Game::render() {
     this->window->clear();
 
     //Render items
-    //mapa1.get_sprite().setScale((float)(window->getSize().x)/(float)(mapa1.get_texture().getSize().x),(float)(window->getSize().y)/(float)(mapa1.get_texture().getSize().y));
-    mapa1.get_sprite().setScale(1.0f,1.0f);
 
+    mapa1.get_sprite().setScale(1.2f,1.2f);
+    player1.getSprite().setScale(0.9f,0.9f);
 
     this->window->draw(mapa1.get_sprite());
 
-    this->window->display();
+    this->window->draw(player1.getSprite());
 
+    this->window->display();
 }
 
 void Game::run() {

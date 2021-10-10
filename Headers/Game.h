@@ -7,6 +7,9 @@
 #include "SFML/Window.hpp"
 #include "SFML/Audio.hpp"
 #include "Map.h"
+#include "../Entities/Player.h"
+#include <vector>
+#include <stack>
 
 
 using namespace std;
@@ -18,6 +21,7 @@ private:
     sf::RenderWindow *window;
     sf::Event sfEvent;
     Map mapa1;
+    Player player1;
 
     //Inicializadores
     void initializeWindow();
