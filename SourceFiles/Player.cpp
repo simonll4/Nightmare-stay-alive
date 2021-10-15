@@ -1,11 +1,13 @@
 #include "../Entities/Player.h"
+#include <cmath>
 
 Player::Player(){
+
     tPlayer = new sf::Texture;
 
     sPlayer = new sf::Sprite;
 
-    tPlayer->loadFromFile("assets/text_base.png");
+    tPlayer->loadFromFile("../assets/text_base.png");
 
     sPlayer->setTexture(*tPlayer);
 
@@ -14,15 +16,11 @@ Player::Player(){
     this->angle = 0.f;
 
     this->movementSpeed = 5.f;
+
 }
 
 Player::~Player(){
 
-}
-
-
-sf::Texture Player::getTexture() {
-    return *tPlayer;
 }
 
 
@@ -36,43 +34,33 @@ void Player::move(const float dir_x, const float dir_y){
 }
 
 
-void Player::update(){
+void Player::update(sf::Window *w){
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         this->move(0.f, -1.f);
-        angle = 270;
-        sPlayer->setRotation(angle);
-        }
-
-
+    }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         this->move(-1.f, 0.f);
-        angle = 180;
-        sPlayer->setRotation(angle);
-        }
+    }
 
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->move(0.f, 1.f);
-        angle = 90;
-        sPlayer->setRotation(angle);
     }
 
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         this->move(1.f, 0.f);
-        angle = 0;
-        sPlayer->setRotation(angle);
-
     }
+
+    angle = ((atanf((sf::Mouse::getPosition(*w).y-sPlayer->getPosition().y)/(sf::Mouse::getPosition(*w).x-sPlayer->getPosition().x)))*360)/M_2_PI;
+    sPlayer->setRotation(angle);
 
 }
 
 float Player::getAngle(){
     return angle;
 };
-
-
-
 
 

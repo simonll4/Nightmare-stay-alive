@@ -1,16 +1,23 @@
 #include "../Headers/Game.h"
 
+
 //Inicializadores
 void Game::initializeWindow() {
+
     this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Nightmare!");
     int fps = 60;
     window->setFramerateLimit(fps);
+    view.reset(sf::FloatRect(0,0,1920,1080));
+
+
+
 }
 
 //Constructor
 Game::Game() {
 
     this->initializeWindow();
+
 }
 
 //Destructor
@@ -30,22 +37,35 @@ void Game::SFMLUpdateEvents() {
 void Game::update() {
 
     this->SFMLUpdateEvents();
-    this->player1.update();
+    this->player1.update(window);
+
+    for (int i = 0; i < bullets.getSize(); ++i) {
+        bullets.get(i)->update();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        bullets.push_front(new Bullet (player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,player1.getAngle()));
+    }
 }
+
 
 void Game::render() {
 
     this->window->clear();
 
     //Render items
-    mapa1.get_sprite().setScale(0.7f,0.7f);
-    player1.getSprite().setScale(0.4f,0.4f);
+    mapa1.get_sprite().setScale(0.9f,0.9f);
+    player1.getSprite().setScale(0.5f,0.5f);
+
+    window->setView(view);
+    view.setCenter(player1.getSprite().getPosition());
 
     this->window->draw(mapa1.get_sprite());
 
     this->window->draw(player1.getSprite());
 
-    this->window->draw(bullets.getSprite());
+    for (int i = 0; i < bullets.getSize(); ++i) {
+        window->draw(bullets.get(i)->getSprite());
+    }
 
     this->window->display();
 }

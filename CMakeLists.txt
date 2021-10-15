@@ -4,7 +4,7 @@ project(proyecto-infoII)
 set(CMAKE_CXX_STANDARD 14)
 include_directories("D:\\mingw64\\include")
 
-add_executable(proyecto main.cpp .//SourceFiles//Game.cpp .//SourceFiles//Map.cpp .//SourceFiles//PLayer.cpp .//SourceFiles//Bullets.cpp)
+add_executable(proyecto main.cpp .//SourceFiles//Game.cpp .//SourceFiles//Map.cpp .//SourceFiles//PLayer.cpp .//SourceFiles//Bullet.cpp)
 target_link_libraries(proyecto sfml-graphics sfml-audio sfml-system sfml-window)
 
 

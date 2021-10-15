@@ -7,8 +7,9 @@
 #include "SFML/Window.hpp"
 #include "SFML/Audio.hpp"
 #include "Map.h"
-#include "../Entities/Bullets.h"
+#include "../Entities/Bullet.h"
 #include "../Entities/Player.h"
+#include "../Auxiliar_Headers/LinkedList.h"
 #include <vector>
 #include <stack>
 
@@ -23,7 +24,9 @@ private:
     sf::Event sfEvent;
     Map mapa1;
     Player player1;
-    Bullets bullets;
+    LinkedList<Bullet*> bullets;
+    sf::View view;
+
 
     //Inicializadores
     void initializeWindow();
@@ -44,6 +47,8 @@ public:
     void render();
 
     void run();
+
+
 };
 
 

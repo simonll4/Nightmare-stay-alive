@@ -6,20 +6,20 @@
 
 using namespace std;
 
-class Bullets{
+class Bullet{
 private:
 
     sf::Texture *tGun;
     sf::Sprite *sGun;
-    int angle;
-    float movementSpeed;
+    int timeout;
+    sf::Vector2f movementSpeed;
 
 public:
-    Bullets();
-    ~Bullets();
+    Bullet(float dirX,float dirY, float angle);
+    //~Bullet();
 
-    //void shoot (sf::Vector2f , float angle);
-    //void move(sf::Vector2f);
+    void update ();
+    void move(float dirX, float dirY);
 
     sf::Texture getTexture();
     sf::Sprite &getSprite ();
