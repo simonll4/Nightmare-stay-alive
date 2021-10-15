@@ -16,12 +16,14 @@ public:
     Player();
     ~Player();
 
+    //Funciones movimiento del player
     void move(const float x, const float y);
     void update();
 
-
+    //Carga de texturas del player
     sf::Texture getTexture ();
     sf::Sprite &getSprite ();
+    float getAngle ();
 };
 
 

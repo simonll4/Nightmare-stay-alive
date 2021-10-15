@@ -38,13 +38,14 @@ void Game::render() {
     this->window->clear();
 
     //Render items
-
-    mapa1.get_sprite().setScale(1.2f,1.2f);
-    player1.getSprite().setScale(0.9f,0.9f);
+    mapa1.get_sprite().setScale(0.7f,0.7f);
+    player1.getSprite().setScale(0.4f,0.4f);
 
     this->window->draw(mapa1.get_sprite());
 
     this->window->draw(player1.getSprite());
+
+    this->window->draw(bullets.getSprite());
 
     this->window->display();
 }

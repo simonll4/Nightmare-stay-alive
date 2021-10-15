@@ -5,7 +5,7 @@ Player::Player(){
 
     sPlayer = new sf::Sprite;
 
-    tPlayer->loadFromFile("../assets/text_base.png");
+    tPlayer->loadFromFile("assets/text_base.png");
 
     sPlayer->setTexture(*tPlayer);
 
@@ -20,9 +20,11 @@ Player::~Player(){
 
 }
 
+
 sf::Texture Player::getTexture() {
     return *tPlayer;
 }
+
 
 sf::Sprite &Player::getSprite() {
     return *sPlayer;
@@ -52,10 +54,9 @@ void Player::update(){
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->move(0.f, 1.f);
-
-            angle = 90;
-            sPlayer->setRotation(angle);
-        }
+        angle = 90;
+        sPlayer->setRotation(angle);
+    }
 
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
@@ -65,8 +66,11 @@ void Player::update(){
 
     }
 
-
 }
+
+float Player::getAngle(){
+    return angle;
+};
 
 
 

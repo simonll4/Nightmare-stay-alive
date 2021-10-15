@@ -7,6 +7,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Audio.hpp"
 #include "Map.h"
+#include "../Entities/Bullets.h"
 #include "../Entities/Player.h"
 #include <vector>
 #include <stack>
@@ -22,6 +23,7 @@ private:
     sf::Event sfEvent;
     Map mapa1;
     Player player1;
+    Bullets bullets;
 
     //Inicializadores
     void initializeWindow();
