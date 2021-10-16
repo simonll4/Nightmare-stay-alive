@@ -1,5 +1,7 @@
 #include "../Entities/Player.h"
 #include <cmath>
+#include <iostream>
+using namespace std;
 
 Player::Player(){
 
@@ -11,9 +13,9 @@ Player::Player(){
 
     sPlayer->setTexture(*tPlayer);
 
-    sPlayer->setOrigin((float)sPlayer->getTexture()->getSize().x/2,(float)sPlayer->getTexture()->getSize().y/2);
+    sPlayer->setOrigin(((float)sPlayer->getTexture()->getSize().x)/2,((float)sPlayer->getTexture()->getSize().y)/2);
 
-    this->angle = 0.f;
+    this->angle = 270.f;
 
     this->movementSpeed = 5.f;
 
@@ -34,7 +36,7 @@ void Player::move(const float dir_x, const float dir_y){
 }
 
 
-void Player::update(sf::Window *w){
+void Player::updateKeys(){
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         this->move(0.f, -1.f);
@@ -44,23 +46,33 @@ void Player::update(sf::Window *w){
         this->move(-1.f, 0.f);
     }
 
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->move(0.f, 1.f);
     }
 
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         this->move(1.f, 0.f);
     }
-
-    angle = ((atanf((sf::Mouse::getPosition(*w).y-sPlayer->getPosition().y)/(sf::Mouse::getPosition(*w).x-sPlayer->getPosition().x)))*360)/M_2_PI;
-    sPlayer->setRotation(angle);
-
 }
 
-float Player::getAngle(){
+float Player::getAngle() const{
     return angle;
-};
+}
+
+void Player::updateMouseCamera(sf::RenderWindow *win) {
+
+    playerPos = sPlayer->getPosition();
+
+    mouse = sf::Mouse::getPosition(*win);
+
+    sf::Vector2f worldPos = win->mapPixelToCoords(mouse);
+
+    a = worldPos.x - playerPos.x;
+    b = worldPos.y - playerPos.y;
+
+    angle = -atan2(a , b) * 180 / 3.14159;
+
+    sPlayer->setRotation(angle);
+}
 
 

@@ -8,6 +8,9 @@ class Player {
 private:
     sf::Texture *tPlayer;
     sf::Sprite *sPlayer;
+    sf::Vector2i mouse;
+    sf::Vector2f playerPos;
+    double a{}, b{};
     float angle;
     float movementSpeed;
 
@@ -18,12 +21,14 @@ public:
 
     //Funciones movimiento del player
     void move(const float x, const float y);
-    void update(sf::Window*);
+    void updateKeys();
+    void updateMouseCamera(sf::RenderWindow*);
+
 
     //Carga de texturas del player
 
     sf::Sprite &getSprite ();
-    float getAngle ();
+    float getAngle () const;
 
 };
 

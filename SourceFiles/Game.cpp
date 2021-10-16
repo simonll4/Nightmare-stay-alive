@@ -4,7 +4,7 @@
 //Inicializadores
 void Game::initializeWindow() {
 
-    this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Nightmare!");
+    this->window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Nightmare!");
     int fps = 60;
     window->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0,0,1920,1080));
@@ -32,12 +32,19 @@ void Game::SFMLUpdateEvents() {
         if (this->sfEvent.type == sf::Event::Closed)
             this->window->close();
     }
+    if (sfEvent.type == sf::Event::Resized)
+    {
+        // update the view to the new size of the window
+        sf::FloatRect visibleArea(0.f, 0.f, sfEvent.size.width, sfEvent.size.height);
+        this->window->setView(sf::View(visibleArea));
+    }
 }
 
 void Game::update() {
 
     this->SFMLUpdateEvents();
-    this->player1.update(window);
+    this->player1.updateKeys();
+    this->player1.updateMouseCamera(this->window);
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         bullets.get(i)->update();
@@ -45,6 +52,7 @@ void Game::update() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
         bullets.push_front(new Bullet (player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,player1.getAngle()));
     }
+
 }
 
 

@@ -18,6 +18,7 @@ Bullet::Bullet(float posX, float posY, float angle){
     sGun->setRotation(angle);
     sGun->setScale(0.1f,0.1f);
 
+
 }
 
 sf::Sprite &Bullet::getSprite() {
