@@ -15,15 +15,13 @@ Player::Player(){
 
     sPlayer->setOrigin(((float)sPlayer->getTexture()->getSize().x)/2,((float)sPlayer->getTexture()->getSize().y)/2);
 
-    this->angle = 270.f;
+    this->angle = 0.f;
 
-    this->movementSpeed = 5.f;
-
-}
-
-Player::~Player(){
+    this->movementSpeed = 200.f;
 
 }
+
+Player::~Player() = default;
 
 
 sf::Sprite &Player::getSprite() {
@@ -31,32 +29,28 @@ sf::Sprite &Player::getSprite() {
 }
 
 
-void Player::move(const float dir_x, const float dir_y){
-    this->sPlayer->move(dir_x * this->movementSpeed, dir_y * this->movementSpeed);
+void Player::move(const float& dt, const float dir_x, const float dir_y){
+    this->sPlayer->move(dir_x * this->movementSpeed * dt, dir_y * this->movementSpeed * dt);
 }
 
 
-void Player::updateKeys(){
+void Player::updateInputKeys(const float &dt) {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-        this->move(0.f, -1.f);
+        this->move(dt, 0.f, -1.f);
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-        this->move(-1.f, 0.f);
+        this->move(dt, -1.f, 0.f);
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-        this->move(0.f, 1.f);
+        this->move(dt, 0.f, 1.f);
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-        this->move(1.f, 0.f);
+        this->move(dt, 1.f, 0.f);
     }
-}
-
-float Player::getAngle() const{
-    return angle;
 }
 
 void Player::updateMouseCamera(sf::RenderWindow *win) {
@@ -75,4 +69,7 @@ void Player::updateMouseCamera(sf::RenderWindow *win) {
     sPlayer->setRotation(angle);
 }
 
+float Player::getAngle() const{
+    return angle;
+}
 

@@ -27,8 +27,11 @@ private:
     LinkedList<Bullet*> bullets;
     sf::View view;
 
+    //Delta time
+    float dt;
+    sf::Clock dtClock;
 
-    //Inicializadores
+    //Initialize
     void initializeWindow();
 
 
@@ -43,6 +46,8 @@ public:
     void SFMLUpdateEvents();
 
     void update();
+
+    void updateDt();
 
     void render();
 

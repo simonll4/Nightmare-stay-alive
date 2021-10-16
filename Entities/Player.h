@@ -19,9 +19,9 @@ public:
     Player();
     ~Player();
 
-    //Funciones movimiento del player
-    void move(const float x, const float y);
-    void updateKeys();
+    //Movement functions of player
+    void move(const float& dt, float x, float y);
+    void updateInputKeys(const float& dt);
     void updateMouseCamera(sf::RenderWindow*);
 
 

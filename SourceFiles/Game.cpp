@@ -8,16 +8,12 @@ void Game::initializeWindow() {
     int fps = 60;
     window->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0,0,1920,1080));
-
-
-
 }
 
 //Constructor
 Game::Game() {
 
     this->initializeWindow();
-
 }
 
 //Destructor
@@ -43,16 +39,22 @@ void Game::SFMLUpdateEvents() {
 void Game::update() {
 
     this->SFMLUpdateEvents();
-    this->player1.updateKeys();
+    this->player1.updateInputKeys(dt);
     this->player1.updateMouseCamera(this->window);
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         bullets.get(i)->update();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-        bullets.push_front(new Bullet (player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,player1.getAngle()));
+        bullets.push_front(new Bullet (player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,player1.getAngle()+90));
     }
 
+}
+
+void Game::updateDt() {
+
+    //Devuelve el tiempo que pasa y reinicia el reloj
+    this->dt = this->dtClock.restart().asSeconds();
 }
 
 
@@ -80,7 +82,14 @@ void Game::render() {
 
 void Game::run() {
     while (this->window->isOpen()) {
+
+        //Update clock
+        this->updateDt();
+
+        //Update frame
         this->update();
+
+        //Render frame
         this->render();
     }
 }
