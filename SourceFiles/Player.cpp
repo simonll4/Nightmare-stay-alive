@@ -17,7 +17,7 @@ Player::Player(){
 
     this->angle = 0.f;
 
-    this->movementSpeed = 200.f;
+    this->movementSpeed = 500.f;
 
 }
 

@@ -30,6 +30,7 @@ public:
     sf::Sprite &getSprite ();
     float getAngle () const;
 
+
 };
 
 

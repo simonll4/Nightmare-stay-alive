@@ -22,7 +22,7 @@ private:
     //Variables
     sf::RenderWindow *window;
     sf::Event sfEvent;
-    Map mapa1;
+    Map map1;
     Player player1;
     LinkedList<Bullet*> bullets;
     sf::View view;
@@ -30,6 +30,7 @@ private:
     //Delta time
     float dt;
     sf::Clock dtClock;
+    sf::Time elapsedTime;
 
     //Initialize
     void initializeWindow();
