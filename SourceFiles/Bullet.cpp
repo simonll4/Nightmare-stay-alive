@@ -8,7 +8,7 @@ Bullet::Bullet(float posX, float posY, float angle){
     tGun = new sf::Texture;
     sGun = new sf::Sprite;
 
-    tGun->loadFromFile("../assets/bullet1.png");
+    tGun->loadFromFile("assets/bullet1.png");
     sGun->setTexture(*tGun);
 
     movementSpeed.x = 7.0f * cos(angle*M_PI/180.0);

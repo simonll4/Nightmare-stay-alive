@@ -7,7 +7,7 @@ void Game::initializeWindow() {
     this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Nightmare!");
     int fps = 60;
     window->setFramerateLimit(fps);
-    view.reset(sf::FloatRect(0,0,(float)window->getSize().x,(float)window->getSize().y));
+    view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
 
 }
@@ -32,10 +32,9 @@ void Game::SFMLUpdateEvents() {
         if (this->sfEvent.type == sf::Event::Closed)
             this->window->close();
     }
-    if (sfEvent.type == sf::Event::Resized)
-    {
+    if (sfEvent.type == sf::Event::Resized) {
         // update the view to the new size of the window
-        sf::FloatRect visibleArea(0.f, 0.f, (float)sfEvent.size.width, (float)sfEvent.size.height);
+        sf::FloatRect visibleArea(0.f, 0.f, (float) sfEvent.size.width, (float) sfEvent.size.height);
         this->window->setView(sf::View(visibleArea));
     }
 }
@@ -52,10 +51,13 @@ void Game::update() {
 
     for (int i = 0; i < bullets.getSize(); i++) {
 
-        if(bullets.get(i)->getSprite().getPosition().x < 0 || bullets.get(i)->getSprite().getPosition().x > window->getSize().x || bullets.get(i)->getSprite().getPosition().y < 0 || bullets.get(i)->getSprite().getPosition().y > window->getSize().y){
+        if (bullets.get(i)->getSprite().getPosition().x < view.getCenter().x - view.getSize().x / 2 ||
+            bullets.get(i)->getSprite().getPosition().x > view.getCenter().x + view.getSize().x / 2 ||
+            bullets.get(i)->getSprite().getPosition().y < view.getCenter().y - view.getSize().y / 2 ||
+            bullets.get(i)->getSprite().getPosition().y > view.getCenter().y + view.getSize().y / 2) {
 
             delete this->bullets.get(i);
-            this-> bullets.remove(i);
+            this->bullets.remove(i);
 
             std::cout << this->bullets.getSize() << "\n";
         }
@@ -63,7 +65,8 @@ void Game::update() {
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        bullets.push_back(new Bullet(player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,player1.getAngle() + 90));
+        bullets.push_back(new Bullet(player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,
+                                     player1.getAngle() + 90));
     }
 }
 
@@ -81,10 +84,19 @@ void Game::render() {
 
     //Render items
     map1.get_sprite().setScale(0.9f, 0.9f);
-    player1.getSprite().setScale(0.5f,0.5f);
+    player1.getSprite().setScale(0.5f, 0.5f);
 
+    sf::Vector2f cPos = player1.getSprite().getPosition();
 
-    view.setCenter(player1.getSprite().getPosition());
+    if(player1.getSprite().getPosition().x < view.getSize().x / 2){
+        cPos.x = view.getSize().x / 2;
+    }
+    if(player1.getSprite().getPosition().y < view.getSize().y / 2){
+        cPos.y = view.getSize().y / 2;
+    }
+
+    view.setCenter(cPos);
+
     window->setView(view);
 
     this->window->draw(map1.get_sprite());
