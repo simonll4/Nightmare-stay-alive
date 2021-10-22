@@ -84,15 +84,22 @@ void Game::render() {
 
     //Render items
     map1.get_sprite().setScale(0.9f, 0.9f);
+
     player1.getSprite().setScale(0.5f, 0.5f);
 
     sf::Vector2f cPos = player1.getSprite().getPosition();
 
-    if(player1.getSprite().getPosition().x < view.getSize().x / 2){
-        cPos.x = view.getSize().x / 2;
+    if(player1.getSprite().getPosition().x > 1300 ){
+        cPos.x = 1300;
     }
-    if(player1.getSprite().getPosition().y < view.getSize().y / 2){
-        cPos.y = view.getSize().y / 2;
+    if(player1.getSprite().getPosition().x < -100){
+        cPos.x = -100;
+    }
+    if(player1.getSprite().getPosition().y < -560 ){
+        cPos.y = -560;
+    }
+    if(player1.getSprite().getPosition().y > 1750){
+        cPos.y = 1750;
     }
 
     view.setCenter(cPos);

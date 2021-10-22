@@ -13,6 +13,9 @@ private:
     sf::Sprite *sGun;
     sf::Vector2f movementSpeed;
 
+    float dt;
+    sf::Clock dtclock;
+
 
 public:
     Bullet(float dirX,float dirY, float angle);

@@ -1,16 +1,12 @@
-//
-// Created by Usuario on 22/10/2021.
-//
-
 #ifndef MAIN_CPP_ENEMIES_H
 #define MAIN_CPP_ENEMIES_H
 
-
+#include "SFML/Graphics.hpp"
 
 class Enemies {
 
-};
 
+};
 
 
 #endif //MAIN_CPP_ENEMIES_H

@@ -11,8 +11,8 @@ Bullet::Bullet(float posX, float posY, float angle){
     tGun->loadFromFile("assets/bullet1.png");
     sGun->setTexture(*tGun);
 
-    movementSpeed.x = 7.0f * cos(angle*M_PI/180.0);
-    movementSpeed.y = 7.0f * sin(angle*M_PI/180.0);
+    movementSpeed.x = 10.0f * cos(angle*M_PI/180.0);
+    movementSpeed.y = 10.0f * sin(angle*M_PI/180.0);
 
     sGun->setPosition(posX , posY);
     sGun->setRotation(angle);
