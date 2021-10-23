@@ -28,6 +28,9 @@ sf::Sprite &Player::getSprite() {
     return *sPlayer;
 }
 
+sf::Texture &Player::getTexture() {
+    return *tPlayer;
+}
 
 void Player::move(const float& dt, const float dir_x, const float dir_y){
     this->sPlayer->move(dir_x * this->movementSpeed * dt, dir_y * this->movementSpeed * dt);

@@ -9,7 +9,8 @@ void Game::initializeWindow() {
     window->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
-
+    MapaTMX miMapa("map2.tmx", player1->getTexture());
+        player1 = miMapa.getPlayer();
 }
 
 //Constructor
@@ -42,8 +43,8 @@ void Game::SFMLUpdateEvents() {
 void Game::update() {
 
     this->SFMLUpdateEvents();
-    this->player1.updateInputKeys(dt);
-    this->player1.updateMouseCamera(this->window);
+    this->player1->updateInputKeys(dt);
+    this->player1->updateMouseCamera(this->window);
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         bullets.get(i)->update();
@@ -65,11 +66,14 @@ void Game::update() {
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        bullets.push_back(new Bullet(player1.getSprite().getPosition().x, player1.getSprite().getPosition().y,
-                                     player1.getAngle() + 90));
+        bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
+                                     player1->getAngle() + 90));
     }
 }
 
+void Game::updateEnemies() {
+
+}
 
 void Game::updateDt() {
 
@@ -85,20 +89,20 @@ void Game::render() {
     //Render items
     map1.get_sprite().setScale(0.9f, 0.9f);
 
-    player1.getSprite().setScale(0.5f, 0.5f);
+    //player1->getSprite().setScale(0.5f, 0.5
+    sf::Vector2f cPos = player1->getSprite().getPosition();
 
-    sf::Vector2f cPos = player1.getSprite().getPosition();
-
-    if(player1.getSprite().getPosition().x > 1300 ){
+    //Map setting
+    if(player1->getSprite().getPosition().x > 1300 ){
         cPos.x = 1300;
     }
-    if(player1.getSprite().getPosition().x < -100){
+    if(player1->getSprite().getPosition().x < -100){
         cPos.x = -100;
     }
-    if(player1.getSprite().getPosition().y < -560 ){
+    if(player1->getSprite().getPosition().y < -560 ){
         cPos.y = -560;
     }
-    if(player1.getSprite().getPosition().y > 1750){
+    if(player1->getSprite().getPosition().y > 1750){
         cPos.y = 1750;
     }
 
@@ -108,11 +112,14 @@ void Game::render() {
 
     this->window->draw(map1.get_sprite());
 
-    this->window->draw(player1.getSprite());
+    this->window->draw(player1->getSprite());
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         window->draw(bullets.get(i)->getSprite());
     }
+
+
+
 
     this->window->display();
 }

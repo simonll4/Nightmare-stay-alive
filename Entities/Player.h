@@ -26,7 +26,7 @@ public:
 
 
     //Carga de texturas del player
-
+    sf::Texture &getTexture ();
     sf::Sprite &getSprite ();
     float getAngle () const;
 

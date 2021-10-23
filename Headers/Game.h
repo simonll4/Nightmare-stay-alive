@@ -7,8 +7,10 @@
 #include "SFML/Window.hpp"
 #include "SFML/Audio.hpp"
 #include "Map.h"
+#include "TiledMap.h"
 #include "../Entities/Bullet.h"
 #include "../Entities/Player.h"
+#include "../Entities/Enemies.h"
 #include "../Auxiliar_Headers/LinkedList.h"
 #include <vector>
 #include <stack>
@@ -23,7 +25,8 @@ private:
     sf::RenderWindow *window;
     sf::Event sfEvent;
     Map map1;
-    Player player1;
+    Player* player1;
+    std::vector<Enemies*> enemies;
     LinkedList<Bullet*> bullets;
     sf::View view;
 
@@ -47,6 +50,8 @@ public:
     void SFMLUpdateEvents();
 
     void update();
+
+    void updateEnemies();
 
     void updateDt();
 
