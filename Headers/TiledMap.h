@@ -53,7 +53,7 @@ public:
                 for (auto tile : tiles) {
 
                     if (tile.ID != 0) {
-                        sprites.push_front(new sf::Sprite(textura)); // Agrego un nuevo sprite a la lista
+                        sprites.push_back(new sf::Sprite(textura)); // Agrego un nuevo sprite a la lista
                         sf::Sprite *sp = sprites.get(0);
                         int tx_fila = (tile.ID - 1) / columns;
                         int tx_col = (tile.ID - 1) % columns;
