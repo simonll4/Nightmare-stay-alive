@@ -10,7 +10,7 @@ void Game::initializeWindow() {
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
 
-    MapaTMX miMapa("../assets/map2.tmx", player1->getTexture());
+    MapaTMX miMapa("assets/map2.tmx", player1->getTexture());
 
     player1 = miMapa.getPlayer();
 
