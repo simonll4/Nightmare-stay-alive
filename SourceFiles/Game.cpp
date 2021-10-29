@@ -50,7 +50,6 @@ void Game::update() {
     this->player1->updateInputKeys(dt);
     this->player1->updateMouseCamera(this->window);
 
-    //this->tiled->dibujar(*window);
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         bullets.get(i)->update();
@@ -84,19 +83,15 @@ void Game::updateDt() {
     this->dt = this->dtClock.restart().asSeconds();
 }
 
-/*void MapaTMX::dibujar(sf::RenderWindow &w) {
-
-    for (int i = sprites.getSize() - 1; i >= 0; --i) {
-        w.draw(*sprites.get(i));
-    }
-}*/
 
 void Game::render() {
 
     this->window->clear();
 
+    this->tiled->dibujar(*window);
+
     //Render items
-    map1.get_sprite().setScale(0.9f, 0.9f);
+    //map1.get_sprite().setScale(0.9f, 0.9f);
 
     player1->getSprite().setScale(0.5f, 0.5f);
     sf::Vector2f cPos = player1->getSprite().getPosition();
@@ -119,7 +114,7 @@ void Game::render() {
 
     window->setView(view);
 
-    this->window->draw(map1.get_sprite()); //Mapa sin tmx
+    //this->window->draw(map1.get_sprite()); //Mapa sin tmx
 
     this->window->draw(player1->getSprite());
 

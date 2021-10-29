@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="144" height="144" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="172">
- <tileset firstgid="1" name="map1" tilewidth="32" tileheight="32" tilecount="22308" columns="156">
+ <tileset firstgid="1" name="map1.png" tilewidth="32" tileheight="32" tilecount="22308" columns="156">
   <image source="map1.png" width="5000" height="4578"/>
  </tileset>
  <layer id="1" name="Capa de patrones 1" width="144" height="144">
