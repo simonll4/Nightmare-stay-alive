@@ -26,9 +26,12 @@ private:
     sf::Event sfEvent;
     Map map1;
     Player* player1;
-    std::vector<Enemies*> enemies;
     LinkedList<Bullet*> bullets;
     sf::View view;
+    MapaTMX* tiled;
+
+
+
 
     //Delta time
     float dt;
@@ -51,13 +54,15 @@ public:
 
     void update();
 
-    void updateEnemies();
-
     void updateDt();
 
     void render();
 
     void run();
+
+    //enemies
+
+
 
 
 };

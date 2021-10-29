@@ -11,10 +11,10 @@ private:
     float hpMax;
     float damage;
     float movementSpeed;
-
     //player position
 
-
+    //Animation
+    sf::IntRect currentFrame;
 
 public:
     Enemies();
@@ -22,6 +22,8 @@ public:
     ~Enemies();
 
     //Funtions
+    void renderEnemies(sf::RenderTarget* target);
+
 
 
     //Texture

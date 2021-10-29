@@ -9,14 +9,15 @@ void Game::initializeWindow() {
     window->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
-    MapaTMX miMapa("map2.tmx", player1->getTexture());
-        player1 = miMapa.getPlayer();
+
+
 }
 
 //Constructor
 Game::Game() {
 
     this->initializeWindow();
+
 }
 
 //Destructor
@@ -45,6 +46,7 @@ void Game::update() {
     this->SFMLUpdateEvents();
     this->player1->updateInputKeys(dt);
     this->player1->updateMouseCamera(this->window);
+    this->tiled->dibujar(*window);
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         bullets.get(i)->update();
@@ -71,9 +73,6 @@ void Game::update() {
     }
 }
 
-void Game::updateEnemies() {
-
-}
 
 void Game::updateDt() {
 
@@ -81,15 +80,25 @@ void Game::updateDt() {
     this->dt = this->dtClock.restart().asSeconds();
 }
 
+/*void MapaTMX::dibujar(sf::RenderWindow &w) {
+
+    for (int i = sprites.getSize() - 1; i >= 0; --i) {
+        w.draw(*sprites.get(i));
+    }
+}*/
 
 void Game::render() {
+
+    MapaTMX miMapa("assets/map2.tmx", player1->getTexture());
+    player1 = miMapa.getPlayer();
+
 
     this->window->clear();
 
     //Render items
-    map1.get_sprite().setScale(0.9f, 0.9f);
+    //map1.get_sprite().setScale(0.9f, 0.9f);
 
-    //player1->getSprite().setScale(0.5f, 0.5
+    player1->getSprite().setScale(0.5f, 0.5f);
     sf::Vector2f cPos = player1->getSprite().getPosition();
 
     //Map setting
@@ -110,16 +119,14 @@ void Game::render() {
 
     window->setView(view);
 
-    this->window->draw(map1.get_sprite());
+    //this->window->draw(map1.get_sprite()); Mapa sin tmx
 
     this->window->draw(player1->getSprite());
+
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         window->draw(bullets.get(i)->getSprite());
     }
-
-
-
 
     this->window->display();
 }

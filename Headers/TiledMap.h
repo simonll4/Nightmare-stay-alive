@@ -41,22 +41,22 @@ public:
         // Me traigo las capas
         const auto &layers = map.getLayers();
 
-        for (int i = 0; i < layers.size(); ++i) { // recorro las capas
+        for (const auto & layer : layers) { // recorro las capas
 
             // Capa de mosaicos
-            if (layers[i]->getType() == tmx::Layer::Type::Tile) {
-                const auto &tileLayer = layers[i]->getLayerAs<tmx::TileLayer>();
+            if (layer->getType() == tmx::Layer::Type::Tile) {
+                const auto &tileLayer = layer->getLayerAs<tmx::TileLayer>();
                 const auto &tiles = tileLayer.getTiles(); // Me traigo todos los mosaicos
 
                 int col = 0;
                 int fila = 0;
-                for (int j = 0; j < tiles.size(); ++j) {
+                for (auto tile : tiles) {
 
-                    if (tiles[j].ID != 0) {
+                    if (tile.ID != 0) {
                         sprites.push_front(new sf::Sprite(textura)); // Agrego un nuevo sprite a la lista
                         sf::Sprite *sp = sprites.get(0);
-                        int tx_fila = (tiles[j].ID - 1) / columns;
-                        int tx_col = (tiles[j].ID - 1) % columns;
+                        int tx_fila = (tile.ID - 1) / columns;
+                        int tx_col = (tile.ID - 1) % columns;
                         sp->setTextureRect({tx_col * (int) tile_size.x, tx_fila * (int) tile_size.x, (int) tile_size.x,
                                             (int) tile_size.x});
                         sp->setPosition(col * tile_size.x, fila * tile_size.x);
@@ -68,8 +68,8 @@ public:
                     }
                 }
                 //capa de Objetos
-            } else if (layers[i]->getType() == tmx::Layer::Type::Object) {
-                const auto &objectLayer = layers[i]->getLayerAs<tmx::ObjectGroup>();
+            } else if (layer->getType() == tmx::Layer::Type::Object) {
+                const auto &objectLayer = layer->getLayerAs<tmx::ObjectGroup>();
                 const auto &objects = objectLayer.getObjects();
                 for (int j = 0; j < objects.size(); ++j) {
                     cout << objects[j].getName() << " ";
@@ -82,6 +82,8 @@ public:
         }
 
     }
+
+    //void dibujar(sf::RenderWindow &w);
 
     void dibujar(sf::RenderWindow &w) {
         for (int i = sprites.getSize() - 1; i >= 0; --i) {
