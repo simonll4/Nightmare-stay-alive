@@ -41,11 +41,11 @@ public:
         // Me traigo las capas
         const auto &layers = map.getLayers();
 
-        for (const auto & layer : layers) { // recorro las capas
+        for (int i = 0; i < layers.size(); ++i) { // recorro las capas
 
             // Capa de mosaicos
-            if (layer->getType() == tmx::Layer::Type::Tile) {
-                const auto &tileLayer = layer->getLayerAs<tmx::TileLayer>();
+            if (layers[i]->getType() == tmx::Layer::Type::Tile) {
+                const auto &tileLayer = layers[i]->getLayerAs<tmx::TileLayer>();
                 const auto &tiles = tileLayer.getTiles(); // Me traigo todos los mosaicos
 
                 int col = 0;
@@ -68,8 +68,8 @@ public:
                     }
                 }
                 //capa de Objetos
-            } else if (layer->getType() == tmx::Layer::Type::Object) {
-                const auto &objectLayer = layer->getLayerAs<tmx::ObjectGroup>();
+            } else if (layers[i]->getType() == tmx::Layer::Type::Object) {
+                const auto &objectLayer = layers[i]->getLayerAs<tmx::ObjectGroup>();
                 const auto &objects = objectLayer.getObjects();
                 for (int j = 0; j < objects.size(); ++j) {
                     cout << objects[j].getName() << " ";
@@ -82,8 +82,6 @@ public:
         }
 
     }
-
-    //void dibujar(sf::RenderWindow &w);
 
     void dibujar(sf::RenderWindow &w) {
         for (int i = sprites.getSize() - 1; i >= 0; --i) {

@@ -4,12 +4,15 @@
 //Inicializadores
 void Game::initializeWindow() {
 
-    this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Nightmare!");
+    this->window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Nightmare!");
     int fps = 60;
     window->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
 
+    MapaTMX miMapa("../assets/map2.tmx", player1->getTexture());
+
+    player1 = miMapa.getPlayer();
 
 }
 
@@ -46,7 +49,8 @@ void Game::update() {
     this->SFMLUpdateEvents();
     this->player1->updateInputKeys(dt);
     this->player1->updateMouseCamera(this->window);
-    this->tiled->dibujar(*window);
+
+    //this->tiled->dibujar(*window);
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         bullets.get(i)->update();
@@ -89,14 +93,10 @@ void Game::updateDt() {
 
 void Game::render() {
 
-    MapaTMX miMapa("assets/map2.tmx", player1->getTexture());
-    player1 = miMapa.getPlayer();
-
-
     this->window->clear();
 
     //Render items
-    //map1.get_sprite().setScale(0.9f, 0.9f);
+    map1.get_sprite().setScale(0.9f, 0.9f);
 
     player1->getSprite().setScale(0.5f, 0.5f);
     sf::Vector2f cPos = player1->getSprite().getPosition();
@@ -119,7 +119,7 @@ void Game::render() {
 
     window->setView(view);
 
-    //this->window->draw(map1.get_sprite()); Mapa sin tmx
+    this->window->draw(map1.get_sprite()); //Mapa sin tmx
 
     this->window->draw(player1->getSprite());
 

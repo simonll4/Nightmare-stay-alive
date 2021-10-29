@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(proyecto-infoII)
 
 set(CMAKE_CXX_STANDARD 14)
-include_directories("D:\\mingw64\\include")
+include_directories("C:\\mingw64\\include")
 
 add_executable(proyecto main.cpp
         .//SourceFiles//Game.cpp

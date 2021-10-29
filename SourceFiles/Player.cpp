@@ -9,7 +9,7 @@ Player::Player(){
 
     sPlayer = new sf::Sprite;
 
-    tPlayer->loadFromFile("assets/text_base.png");
+    tPlayer->loadFromFile("../assets/text_base.png");
 
     sPlayer->setTexture(*tPlayer);
 

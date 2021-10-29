@@ -28,6 +28,7 @@ private:
     Player* player1;
     LinkedList<Bullet*> bullets;
     sf::View view;
+
     MapaTMX* tiled;
 
 
