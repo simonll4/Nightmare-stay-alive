@@ -6,7 +6,6 @@
 
 class Player {
 private:
-    sf::Texture *tPlayer;
     sf::Sprite *sPlayer;
     sf::Vector2i mouse;
     sf::Vector2f playerPos;
@@ -16,7 +15,7 @@ private:
 
 public:
     //Constructors Destructors
-    Player();
+    explicit Player(sf::Texture &tPlayer);
     ~Player();
 
     //Movement functions of player
@@ -26,7 +25,6 @@ public:
 
 
     //Carga de texturas del player
-    sf::Texture &getTexture ();
     sf::Sprite &getSprite ();
     float getAngle () const;
 

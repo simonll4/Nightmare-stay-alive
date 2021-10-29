@@ -10,17 +10,16 @@ void Game::initializeWindow() {
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
 
-    MapaTMX miMapa("assets/map2.tmx", player1->getTexture());
+    tiled = new MapaTMX("assets/map2.tmx", tPlayer);
 
-    player1 = miMapa.getPlayer();
+    player1 = tiled->getPlayer();
 
 }
 
 //Constructor
 Game::Game() {
-
+    tPlayer.loadFromFile("assets/text_base.png");
     this->initializeWindow();
-
 }
 
 //Destructor
@@ -51,8 +50,8 @@ void Game::update() {
     this->player1->updateMouseCamera(this->window);
 
 
-    for (int i = 0; i < bullets.getSize(); ++i) {
-        bullets.get(i)->update();
+    for (bullets.iterInit(); !bullets.iterEnd(); bullets.iterNext()) {
+        bullets.iterGet()->update();
     }
 
     for (int i = 0; i < bullets.getSize(); i++) {

@@ -3,15 +3,12 @@
 #include <iostream>
 using namespace std;
 
-Player::Player(){
+Player::Player(sf::Texture &tPlayer){
 
-    tPlayer = new sf::Texture;
 
     sPlayer = new sf::Sprite;
 
-    tPlayer->loadFromFile("assets/text_base.png");
-
-    sPlayer->setTexture(*tPlayer);
+    sPlayer->setTexture(tPlayer);
 
     sPlayer->setOrigin(((float)sPlayer->getTexture()->getSize().x)/2,((float)sPlayer->getTexture()->getSize().y)/2);
 
@@ -26,10 +23,6 @@ Player::~Player() = default;
 
 sf::Sprite &Player::getSprite() {
     return *sPlayer;
-}
-
-sf::Texture &Player::getTexture() {
-    return *tPlayer;
 }
 
 void Player::move(const float& dt, const float dir_x, const float dir_y){

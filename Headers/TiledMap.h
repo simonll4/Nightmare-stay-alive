@@ -75,7 +75,7 @@ public:
                     cout << objects[j].getName() << " ";
                     cout << objects[j].getPosition().x << " " << objects[j].getPosition().y << endl;
                     if (objects[j].getName() == "player") {
-                        player = new Player();
+                        player = new Player(pl_tx);
                     }
                 }
             }
@@ -84,9 +84,11 @@ public:
     }
 
     void dibujar(sf::RenderWindow &w) {
-        for (int i = sprites.getSize() - 1; i >= 0; --i) {
-            w.draw(*sprites.get(i));
+
+        for(sprites.iterInit();! sprites.iterEnd(); sprites.iterNext()){
+            w.draw(*sprites.iterGet());
         }
+
     }
 
     Player *getPlayer() {
