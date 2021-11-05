@@ -10,9 +10,13 @@ void Game::initializeWindow() {
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
 
-    tiled = new MapaTMX("assets/map2.tmx", tPlayer);
+    tiled = new MapaTMX("assets/map2.tmx",tPlayer);
 
     player1 = tiled->getPlayer();
+
+    player1->getSprite().setPosition(2216.f,1806.67);
+
+    enemy1->getSprite().setPosition(4472.f,1909.33);
 
 }
 
@@ -89,34 +93,32 @@ void Game::render() {
 
     this->tiled->dibujar(*window);
 
-    //Render items
-    //map1.get_sprite().setScale(0.9f, 0.9f);
+
 
     player1->getSprite().setScale(0.5f, 0.5f);
     sf::Vector2f cPos = player1->getSprite().getPosition();
 
     //Map setting
-    if(player1->getSprite().getPosition().x > 1300 ){
-        cPos.x = 1300;
+   if(player1->getSprite().getPosition().x > 3550){
+        cPos.x = 3550;
     }
-    if(player1->getSprite().getPosition().x < -100){
-        cPos.x = -100;
+    if(player1->getSprite().getPosition().x < 1050){
+        cPos.x = 1050;
     }
-    if(player1->getSprite().getPosition().y < -560 ){
-        cPos.y = -560;
-    }
-    if(player1->getSprite().getPosition().y > 1750){
-        cPos.y = 1750;
+    if(player1->getSprite().getPosition().y < 520 ){
+         cPos.y = 540;
+     }
+    if(player1->getSprite().getPosition().y > 4040){
+         cPos.y = 4040;
     }
 
     view.setCenter(cPos);
 
     window->setView(view);
 
-    //this->window->draw(map1.get_sprite()); //Mapa sin tmx
-
     this->window->draw(player1->getSprite());
 
+    this->window->draw(enemy1->getSprite());
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         window->draw(bullets.get(i)->getSprite());

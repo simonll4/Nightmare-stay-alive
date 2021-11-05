@@ -6,10 +6,9 @@ include_directories("D:\\mingw64\\include")
 
 add_executable(proyecto main.cpp
         .//SourceFiles//Game.cpp
-        .//SourceFiles//Map.cpp
         .//SourceFiles//Player.cpp
         .//SourceFiles//Bullet.cpp
-        .//SourceFiles//Enemies.cpp
+        .//SourceFiles//enemy.cpp
         )
 
 if(WIN32)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="144" height="144" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="172">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="144" height="144" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="176">
  <tileset firstgid="1" name="map1.png" tilewidth="32" tileheight="32" tilecount="22308" columns="156">
   <image source="map1.png" width="5000" height="4578"/>
  </tileset>
@@ -378,6 +378,9 @@
  </objectgroup>
  <objectgroup id="3" name="Spawn">
   <object id="171" name="player" x="2216" y="1806.67">
+   <point/>
+  </object>
+  <object id="175" name="zombies" x="4472" y="1909.33">
    <point/>
   </object>
  </objectgroup>

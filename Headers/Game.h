@@ -6,14 +6,15 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Audio.hpp"
-#include "Map.h"
 #include "TiledMap.h"
 #include "../Entities/Bullet.h"
 #include "../Entities/Player.h"
-#include "../Entities/Enemies.h"
+//#include "../Entities/enemies.h"
+#include "../Entities/enemy.h"
 #include "../Auxiliar_Headers/LinkedList.h"
 #include <vector>
 #include <stack>
+#include <queue>
 
 
 using namespace std;
@@ -24,12 +25,11 @@ private:
     //Variables
     sf::RenderWindow *window;
     sf::Event sfEvent;
-    Map map1;
     Player* player1;
+    enemy* enemy1;
     LinkedList<Bullet*> bullets;
     sf::View view;
     sf::Texture tPlayer;
-
     MapaTMX* tiled;
 
 
@@ -63,7 +63,8 @@ public:
     void run();
 
     //enemies
-
+    float spawnTimer;
+    float spawnTimerMax;
 
 
 

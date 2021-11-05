@@ -14,7 +14,7 @@ Player::Player(sf::Texture &tPlayer){
 
     this->angle = 0.f;
 
-    this->movementSpeed = 400.f;
+    this->movementSpeed = 350.f;
 
 }
 

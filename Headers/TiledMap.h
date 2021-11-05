@@ -1,3 +1,4 @@
+
 #ifndef TESTSFML_MAPATMX_H
 #define TESTSFML_MAPATMX_H
 
@@ -9,7 +10,8 @@
 #include <string>
 #include "../Auxiliar_Headers/LinkedList.h"
 #include "../Entities/Player.h"
-
+#include "../Entities/Enemies.h"
+#include <queue>
 
 using namespace std;
 
@@ -21,6 +23,7 @@ private:
     sf::Vector2u tile_size;
     uint32_t columns;
     Player *player;
+
 
 
 public:
@@ -53,7 +56,7 @@ public:
                 for (auto tile : tiles) {
 
                     if (tile.ID != 0) {
-                        sprites.push_back(new sf::Sprite(textura)); // Agrego un nuevo sprite a la lista
+                        sprites.push_front(new sf::Sprite(textura)); // Agrego un nuevo sprite a la lista
                         sf::Sprite *sp = sprites.get(0);
                         int tx_fila = (tile.ID - 1) / columns;
                         int tx_col = (tile.ID - 1) % columns;
@@ -72,11 +75,10 @@ public:
                 const auto &objectLayer = layers[i]->getLayerAs<tmx::ObjectGroup>();
                 const auto &objects = objectLayer.getObjects();
                 for (int j = 0; j < objects.size(); ++j) {
-                    cout << objects[j].getName() << " ";
-                    cout << objects[j].getPosition().x << " " << objects[j].getPosition().y << endl;
                     if (objects[j].getName() == "player") {
                         player = new Player(pl_tx);
                     }
+
                 }
             }
         }
