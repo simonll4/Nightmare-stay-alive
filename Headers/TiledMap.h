@@ -28,7 +28,7 @@ private:
 
 public:
 
-    explicit MapaTMX(const string &archivo, sf::Texture &pl_tx) {
+    explicit MapaTMX(const string &archivo, sf::Texture &pl_tx,queue<Enemies*> &enemies) {
         if (!map.load(archivo))
             throw "Cannot open map";
 
@@ -77,6 +77,13 @@ public:
                 for (int j = 0; j < objects.size(); ++j) {
                     if (objects[j].getName() == "player") {
                         player = new Player(pl_tx);
+                        player->getSprite().setPosition(objects[j].getPosition().x,objects[j].getPosition().y);
+                    }
+                    if (objects[j].getName() == "zombies") {
+                        Enemies *enemy= new Enemies();
+                        enemy->getSprite().setPosition(objects[j].getPosition().x,objects[j].getPosition().y);
+                        enemies.push(enemy);
+                        cout<< objects[j].getProperties()[0].getIntValue();
                     }
 
                 }

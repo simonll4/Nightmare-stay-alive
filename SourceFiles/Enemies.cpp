@@ -6,7 +6,7 @@ Enemies::Enemies() {
     tEnemy = new sf::Texture;
     sEnemy = new sf::Sprite;
 
-    tEnemy->loadFromFile("assets/carpa.jpg");
+    tEnemy->loadFromFile("assets/enemy.png");
     sEnemy->setTexture(*tEnemy);
 
     sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);

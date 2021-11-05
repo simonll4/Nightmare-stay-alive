@@ -10,7 +10,7 @@
 #include "../Entities/Bullet.h"
 #include "../Entities/Player.h"
 //#include "../Entities/enemies.h"
-#include "../Entities/enemy.h"
+#include "../Entities/Enemies.h"
 #include "../Auxiliar_Headers/LinkedList.h"
 #include <vector>
 #include <stack>
@@ -26,7 +26,8 @@ private:
     sf::RenderWindow *window;
     sf::Event sfEvent;
     Player* player1;
-    enemy* enemy1;
+    queue<Enemies*> enemies;
+    LinkedList<Enemies*> enemies1;
     LinkedList<Bullet*> bullets;
     sf::View view;
     sf::Texture tPlayer;

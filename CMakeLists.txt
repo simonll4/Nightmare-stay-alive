@@ -8,7 +8,7 @@ add_executable(proyecto main.cpp
         .//SourceFiles//Game.cpp
         .//SourceFiles//Player.cpp
         .//SourceFiles//Bullet.cpp
-        .//SourceFiles//enemy.cpp
+        .//SourceFiles//Enemies.cpp
         )
 
 if(WIN32)

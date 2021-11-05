@@ -10,13 +10,13 @@ void Game::initializeWindow() {
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(1.5f);
 
-    tiled = new MapaTMX("assets/map2.tmx",tPlayer);
+    tiled = new MapaTMX("assets/map2.tmx",tPlayer,enemies);
 
     player1 = tiled->getPlayer();
 
-    player1->getSprite().setPosition(2216.f,1806.67);
+    enemies1.push_front(enemies.front());
+    enemies.pop();
 
-    enemy1->getSprite().setPosition(4472.f,1909.33);
 
 }
 
@@ -118,7 +118,9 @@ void Game::render() {
 
     this->window->draw(player1->getSprite());
 
-    this->window->draw(enemy1->getSprite());
+    for (enemies1.iterInit();!enemies1.iterEnd();enemies1.iterNext()) {
+        this->window->draw(enemies1.iterGet()->getSprite());
+    }
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         window->draw(bullets.get(i)->getSprite());
