@@ -9,7 +9,6 @@
 #include "TiledMap.h"
 #include "../Entities/Bullet.h"
 #include "../Entities/Player.h"
-//#include "../Entities/enemies.h"
 #include "../Entities/Enemies.h"
 #include "../Auxiliar_Headers/LinkedList.h"
 #include <vector>
@@ -63,9 +62,7 @@ public:
 
     void run();
 
-    //enemies
-    float spawnTimer;
-    float spawnTimerMax;
+
 
 
 

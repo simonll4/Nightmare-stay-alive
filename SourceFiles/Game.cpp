@@ -8,14 +8,17 @@ void Game::initializeWindow() {
     int fps = 60;
     window->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
-    view.zoom(1.5f);
+    view.zoom(2.2f);
 
     tiled = new MapaTMX("assets/map2.tmx",tPlayer,enemies);
 
     player1 = tiled->getPlayer();
 
-    enemies1.push_front(enemies.front());
-    enemies.pop();
+    while(!enemies.empty()){
+        enemies1.push_front(enemies.front());
+        enemies.pop();
+    }
+
 
 
 }
@@ -51,6 +54,11 @@ void Game::update() {
 
     this->SFMLUpdateEvents();
     this->player1->updateInputKeys(dt);
+
+    for (enemies1.iterInit();!enemies1.iterEnd();enemies1.iterNext()) {
+            enemies1.iterGet()->move(dt,player1->getSprite().getPosition().y,player1->getSprite().getPosition().x);
+    }
+
     this->player1->updateMouseCamera(this->window);
 
 
@@ -93,7 +101,8 @@ void Game::render() {
 
     this->tiled->dibujar(*window);
 
-
+    float spawnTimer = 0;
+    float spawnTimerMax = 1;
 
     player1->getSprite().setScale(0.5f, 0.5f);
     sf::Vector2f cPos = player1->getSprite().getPosition();
@@ -105,7 +114,7 @@ void Game::render() {
     if(player1->getSprite().getPosition().x < 1050){
         cPos.x = 1050;
     }
-    if(player1->getSprite().getPosition().y < 520 ){
+    if(player1->getSprite().getPosition().y < 540 ){
          cPos.y = 540;
      }
     if(player1->getSprite().getPosition().y > 4040){
@@ -119,8 +128,10 @@ void Game::render() {
     this->window->draw(player1->getSprite());
 
     for (enemies1.iterInit();!enemies1.iterEnd();enemies1.iterNext()) {
-        this->window->draw(enemies1.iterGet()->getSprite());
-    }
+            this->window->draw(enemies1.iterGet()->getSprite());
+        }
+
+
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         window->draw(bullets.get(i)->getSprite());

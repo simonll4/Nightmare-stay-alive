@@ -80,16 +80,16 @@ public:
                         player->getSprite().setPosition(objects[j].getPosition().x,objects[j].getPosition().y);
                     }
                     if (objects[j].getName() == "zombies") {
-                        Enemies *enemy= new Enemies();
-                        enemy->getSprite().setPosition(objects[j].getPosition().x,objects[j].getPosition().y);
+                        Enemies *enemy = new Enemies();
+                        enemy->getSprite().setPosition(objects[j].getPosition().x, objects[j].getPosition().y);
+                        enemy->getSprite().setScale(0.5f, 0.5f);
+                        enemy->getSprite().setOrigin((float) enemy->getTexture().getSize().x / 2,
+                                                     (float) enemy->getTexture().getSize().y / 2);
                         enemies.push(enemy);
-                        cout<< objects[j].getProperties()[0].getIntValue();
                     }
-
                 }
             }
         }
-
     }
 
     void dibujar(sf::RenderWindow &w) {

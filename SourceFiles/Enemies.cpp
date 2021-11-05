@@ -1,4 +1,5 @@
 #include "../Entities/Enemies.h"
+#include <cmath>
 
 
 Enemies::Enemies() {
@@ -11,20 +12,48 @@ Enemies::Enemies() {
 
     sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);
 
-    //this->currentFrame = sf::IntRect(0,0,243,224);
-
-    //this->sEnemy->setTextureRect(sf::IntRect(this->currentFrame));
 
     this->hpMax = 50.f;
 
     this->damage = 10.f;
 
-    this->movementSpeed = 300.f;
+    this->movementSpeed = 150.f;
 
 }
 
 sf::Sprite &Enemies::getSprite() {
     return *sEnemy;
+}
+
+sf::Texture &Enemies::getTexture() {
+    return *tEnemy;
+}
+
+void Enemies::move (const float& dt, float y, float x){
+
+    float posX;
+    float posY;
+    float angle;
+
+    if(this->getSprite().getPosition().x < x){
+        this->sEnemy->move(1.f * this->movementSpeed * dt, 0.f * this->movementSpeed * dt);
+    }
+    if(this->getSprite().getPosition().x > x){
+        this->sEnemy->move(-1.f * this->movementSpeed * dt, 0.f * this->movementSpeed * dt);
+    }
+    if(this->getSprite().getPosition().y < y){
+        this->sEnemy->move(0.f * this->movementSpeed * dt, 1.f * this->movementSpeed * dt);
+    }
+    if(this->getSprite().getPosition().y > y){
+        this->sEnemy->move(-0.f * this->movementSpeed * dt, -1.f * this->movementSpeed * dt);
+    }
+
+    posX = x - this->sEnemy->getPosition().x;
+    posY = y - this->sEnemy->getPosition().y;
+    angle = -atan2(posX,posY) * 180 / 3.14159;
+
+    this->sEnemy->setRotation(angle);
+
 }
 
 

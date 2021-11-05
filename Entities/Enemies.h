@@ -13,20 +13,17 @@ private:
     float damage;
     float movementSpeed;
 
-    //player position
-
-    //Animation
-    //sf::IntRect currentFrame;
-
 public:
     Enemies();
 
     ~Enemies();
 
 
-    //Texture
+    //Texture and Sprite
     sf::Sprite &getSprite ();
-
+    sf::Texture &getTexture ();
+    //player position
+    void move (const float& dt,float x,float y);
 };
 
 
