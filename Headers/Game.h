@@ -35,6 +35,7 @@ private:
 
 
 
+
     //Delta time
     float dt;
     sf::Clock dtClock;
@@ -60,11 +61,12 @@ public:
 
     void render();
 
-    void run();
+    void run();\
 
+    void bulletZombie(LinkedList<Enemies*> &enemies1,LinkedList<Bullet*> &bullets);
 
-
-
+    sf::Clock * clock1;
+    float * time1;
 
 };
 

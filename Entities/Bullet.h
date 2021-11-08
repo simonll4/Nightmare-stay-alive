@@ -12,6 +12,7 @@ private:
     sf::Texture *tGun;
     sf::Sprite *sGun;
     sf::Vector2f movementSpeed;
+    float damage;
 
     float dt;
     sf::Clock dtclock;
@@ -23,6 +24,8 @@ public:
 
     void update ();
     sf::Sprite &getSprite ();
+
+    float get_Damage();
 
 
 };

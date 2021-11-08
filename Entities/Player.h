@@ -28,6 +28,8 @@ public:
     sf::Sprite &getSprite ();
     float getAngle () const;
 
+    //Setters
+    void setMovementSpeed (float);
 
 };
 

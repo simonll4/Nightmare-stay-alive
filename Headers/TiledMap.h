@@ -25,10 +25,9 @@ private:
     Player *player;
 
 
-
 public:
 
-    explicit MapaTMX(const string &archivo, sf::Texture &pl_tx,queue<Enemies*> &enemies) {
+    explicit MapaTMX(const string &archivo, sf::Texture &pl_tx, queue<Enemies *> &enemies) {
         if (!map.load(archivo))
             throw "Cannot open map";
 
@@ -53,7 +52,7 @@ public:
 
                 int col = 0;
                 int fila = 0;
-                for (auto tile : tiles) {
+                for (auto tile: tiles) {
 
                     if (tile.ID != 0) {
                         sprites.push_front(new sf::Sprite(textura)); // Agrego un nuevo sprite a la lista
@@ -77,7 +76,7 @@ public:
                 for (int j = 0; j < objects.size(); ++j) {
                     if (objects[j].getName() == "player") {
                         player = new Player(pl_tx);
-                        player->getSprite().setPosition(objects[j].getPosition().x,objects[j].getPosition().y);
+                        player->getSprite().setPosition(objects[j].getPosition().x, objects[j].getPosition().y);
                     }
                     if (objects[j].getName() == "zombies") {
                         Enemies *enemy = new Enemies();
@@ -87,6 +86,13 @@ public:
                                                      (float) enemy->getTexture().getSize().y / 2);
                         enemies.push(enemy);
                     }
+                    /*if (objects[j].getName() == "Objeto") {
+                        sf::Rect<float> ogb(objects[j].getAABB().left, objects[j].getAABB().top,
+                                            objects[j].getAABB().width, objects[j].getAABB().height);
+                        if (player->getSprite().getGlobalBounds().intersects(ogb)) {
+                            player->setMovementSpeed(0.f);
+                        }
+                    }*/
                 }
             }
         }
@@ -94,7 +100,7 @@ public:
 
     void dibujar(sf::RenderWindow &w) {
 
-        for(sprites.iterInit();! sprites.iterEnd(); sprites.iterNext()){
+        for (sprites.iterInit(); !sprites.iterEnd(); sprites.iterNext()) {
             w.draw(*sprites.iterGet());
         }
 
@@ -103,6 +109,30 @@ public:
     Player *getPlayer() {
         return player;
     }
+
+    /*void collisionCheck (const string &archivo, sf::Texture &pl_tx, queue<Enemies *> &enemies){
+        tile_size.x = map.getTileSize().x;
+        tile_size.y = map.getTileSize().y;
+        const auto &tileSet = map.getTilesets();
+        textura.loadFromFile(tileSet[0].getImagePath());
+        columns = tileSet[0].getColumnCount();
+        const auto &layers = map.getLayers();
+        for (int i = 0; i < layers.size(); ++i) {
+            if (layers[i]->getType() == tmx::Layer::Type::Object) {
+                const auto &objectLayer = layers[i]->getLayerAs<tmx::ObjectGroup>();
+                const auto &objects = objectLayer.getObjects();
+                for (int j = 0; j < objects.size(); ++j) {
+                    if (objects[j].getName() == "Objeto") {
+                        sf::Rect<float> ogb(objects[j].getAABB().left, objects[j].getAABB().top,
+                                            objects[j].getAABB().width, objects[j].getAABB().height);
+                        if (player->getSprite().getGlobalBounds().intersects(ogb)) {
+                            player->setMovementSpeed(0.f);
+                        }
+                    }
+                }
+            }
+        }
+    }*/
 };
 
 

@@ -17,7 +17,10 @@ Enemies::Enemies() {
 
     this->damage = 10.f;
 
-    this->movementSpeed = 150.f;
+    this->movementSpeed = 100.f;
+
+}
+Enemies::~Enemies() {
 
 }
 
@@ -27,6 +30,14 @@ sf::Sprite &Enemies::getSprite() {
 
 sf::Texture &Enemies::getTexture() {
     return *tEnemy;
+}
+
+void Enemies::setHpmax(float hp) {
+    hpMax = hp;
+}
+
+float Enemies::getHpmax (){
+    return hpMax;
 }
 
 void Enemies::move (const float& dt, float y, float x){

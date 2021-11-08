@@ -10,6 +10,10 @@ void Game::initializeWindow() {
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(2.2f);
 
+    clock1 = new sf::Clock();
+
+    time1 = new float;
+
     tiled = new MapaTMX("assets/map2.tmx",tPlayer,enemies);
 
     player1 = tiled->getPlayer();
@@ -18,8 +22,6 @@ void Game::initializeWindow() {
         enemies1.push_front(enemies.front());
         enemies.pop();
     }
-
-
 
 }
 
@@ -52,11 +54,19 @@ void Game::SFMLUpdateEvents() {
 
 void Game::update() {
 
+    *time1 += clock1->getElapsedTime().asSeconds();
+
+
     this->SFMLUpdateEvents();
+
     this->player1->updateInputKeys(dt);
 
-    for (enemies1.iterInit();!enemies1.iterEnd();enemies1.iterNext()) {
-            enemies1.iterGet()->move(dt,player1->getSprite().getPosition().y,player1->getSprite().getPosition().x);
+    //this->tiled->collisionCheck("assets/map2.tmx",tPlayer,enemies);
+
+    bulletZombie(enemies1, bullets);
+
+    for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
+        enemies1.iterGet()->move(dt, player1->getSprite().getPosition().y, player1->getSprite().getPosition().x);
     }
 
     this->player1->updateMouseCamera(this->window);
@@ -76,17 +86,35 @@ void Game::update() {
             delete this->bullets.get(i);
             this->bullets.remove(i);
 
-            std::cout << this->bullets.getSize() << "\n";
         }
 
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
-                                     player1->getAngle() + 90));
+        if(*time1 > 450.f){
+            bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
+                                         player1->getAngle() + 90));
+            *time1 = 0.f;
+        }
+
     }
 }
 
+void Game::bulletZombie (LinkedList<Enemies*> &enemies,LinkedList<Bullet*> &bullets){
+    for (int i = 0; i < bullets.getSize(); ++i) {
+        for (int j = 0; j < enemies.getSize(); ++j) {
+            if(bullets.get(i)->getSprite().getGlobalBounds().intersects(enemies.get(j)->getSprite().getGlobalBounds())){
+                enemies.get(j)->setHpmax(enemies.get(j)->getHpmax() - bullets.get(i)->get_Damage());
+                delete bullets.get(i);
+                bullets.remove(i);
+                if(enemies.get(j)->getHpmax() == 0){
+                    delete enemies.get(j);
+                    enemies.remove(j);
+                }
+            }
+        }
+    }
+}
 
 void Game::updateDt() {
 
@@ -100,9 +128,6 @@ void Game::render() {
     this->window->clear();
 
     this->tiled->dibujar(*window);
-
-    float spawnTimer = 0;
-    float spawnTimerMax = 1;
 
     player1->getSprite().setScale(0.5f, 0.5f);
     sf::Vector2f cPos = player1->getSprite().getPosition();
@@ -130,7 +155,6 @@ void Game::render() {
     for (enemies1.iterInit();!enemies1.iterEnd();enemies1.iterNext()) {
             this->window->draw(enemies1.iterGet()->getSprite());
         }
-
 
 
     for (int i = 0; i < bullets.getSize(); ++i) {
