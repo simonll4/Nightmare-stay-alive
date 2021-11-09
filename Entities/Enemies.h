@@ -18,11 +18,11 @@ public:
 
     ~Enemies();
 
-
     //Texture and Sprite
     sf::Sprite &getSprite ();
     sf::Texture &getTexture ();
     float getHpmax();
+    float getDamage();
     //player position
     void move (const float& dt,float x,float y);
     //Setters

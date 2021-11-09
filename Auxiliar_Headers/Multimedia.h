@@ -5,6 +5,7 @@
 class Multimedia{
 public:
     sf::Text reload;
+    sf::Text game_over;
     sf::Font font;
     sf::SoundBuffer reload_buffer;
     sf::SoundBuffer reload_shout_b;
@@ -13,5 +14,7 @@ public:
     sf::SoundBuffer shot_buffer;
     sf::Sound shot;
     sf::Music background;
+
+
 };
 #endif //MAIN_CPP_MULTIMEDIA_H

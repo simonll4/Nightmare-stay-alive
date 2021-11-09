@@ -67,6 +67,8 @@ public:
 
     void bulletZombie(LinkedList<Enemies*> &enemies1,LinkedList<Bullet*> &bullets);
 
+    void playerZombie(LinkedList<Enemies*> &enemies1,Player player1);
+
     sf::Clock * clock1;
     float * time1;
     int charger = 0;

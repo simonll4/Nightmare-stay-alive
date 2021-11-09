@@ -68,7 +68,7 @@ void Game::update() {
 
     //this->tiled->collisionCheck("assets/map2.tmx",tPlayer,enemies);
 
-
+    playerZombie(enemies1, *player1);
     bulletZombie(enemies1, bullets);
 
     for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
@@ -151,6 +151,16 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
     }
 }
 
+void Game::playerZombie(LinkedList<Enemies *> &enemies1, Player player1) {
+    for (int i = 0; i < enemies1.getSize(); ++i) {
+        if(player1.getSprite().getGlobalBounds().intersects(enemies1.get(i)->getSprite().getGlobalBounds())){
+            cout << "aia" << endl;
+            player1.setHp(player1.getHp() - enemies1.get(i)->getDamage());
+
+        }
+    }
+}
+
 void Game::updateDt() {
 
     //Devuelve el tiempo que pasa y reinicia el reloj
@@ -168,17 +178,17 @@ void Game::render() {
     sf::Vector2f cPos = player1->getSprite().getPosition();
 
     //Map setting
-    if (player1->getSprite().getPosition().x > 3550) {
-        cPos.x = 3550;
+    if (player1->getSprite().getPosition().x > 3200) {
+        cPos.x = 3200;
     }
-    if (player1->getSprite().getPosition().x < 1050) {
-        cPos.x = 1050;
+    if (player1->getSprite().getPosition().x < 1450) {
+        cPos.x = 1450;
     }
-    if (player1->getSprite().getPosition().y < 540) {
-        cPos.y = 540;
+    if (player1->getSprite().getPosition().y < 790) {
+        cPos.y = 790;
     }
-    if (player1->getSprite().getPosition().y > 4040) {
-        cPos.y = 4040;
+    if (player1->getSprite().getPosition().y > 3820) {
+        cPos.y = 3820;
     }
 
     view.setCenter(cPos);
@@ -204,6 +214,13 @@ void Game::render() {
     multimedia.reload.setPosition(player1->getSprite().getPosition().x+50,player1->getSprite().getPosition().y+50);
     if (this->charger > 25) {
         this->window->draw(multimedia.reload);
+    }
+    multimedia.game_over.setString("GAME OVER");
+    multimedia.game_over.setCharacterSize(125);
+    multimedia.game_over.setFillColor(sf::Color::Red);
+    multimedia.game_over.setPosition(player1->getSprite().getPosition().x,player1->getSprite().getPosition().y);
+    if (this->player1->getHp() <= 0) {
+        this->window->draw(multimedia.game_over);
     }
 
     this->window->display();

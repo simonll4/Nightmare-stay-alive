@@ -15,7 +15,7 @@ Enemies::Enemies() {
 
     this->hpMax = 50.f;
 
-    this->damage = 10.f;
+    this->damage = 20.f;
 
     this->movementSpeed = 100.f;
 
@@ -39,6 +39,11 @@ void Enemies::setHpmax(float hp) {
 float Enemies::getHpmax (){
     return hpMax;
 }
+
+float Enemies::getDamage(){
+    return damage;
+}
+
 
 void Enemies::move (const float& dt, float y, float x){
 
