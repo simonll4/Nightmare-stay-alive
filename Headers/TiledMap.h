@@ -85,6 +85,8 @@ public:
                         enemy->getSprite().setOrigin((float) enemy->getTexture().getSize().x / 2,
                                                      (float) enemy->getTexture().getSize().y / 2);
                         enemies.push(enemy);
+
+
                     }
                     /*if (objects[j].getName() == "Objeto") {
                         sf::Rect<float> ogb(objects[j].getAABB().left, objects[j].getAABB().top,

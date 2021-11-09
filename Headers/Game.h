@@ -11,6 +11,7 @@
 #include "../Entities/Player.h"
 #include "../Entities/Enemies.h"
 #include "../Auxiliar_Headers/LinkedList.h"
+#include "../Auxiliar_Headers/Multimedia.h"
 #include <vector>
 #include <stack>
 #include <queue>
@@ -31,6 +32,7 @@ private:
     sf::View view;
     sf::Texture tPlayer;
     MapaTMX* tiled;
+    Multimedia multimedia;
 
 
 
@@ -67,6 +69,8 @@ public:
 
     sf::Clock * clock1;
     float * time1;
+    int charger = 0;
+
 
 };
 

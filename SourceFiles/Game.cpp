@@ -14,14 +14,20 @@ void Game::initializeWindow() {
 
     time1 = new float;
 
-    tiled = new MapaTMX("assets/map2.tmx",tPlayer,enemies);
+    tiled = new MapaTMX("assets/map2.tmx", tPlayer, enemies);
 
     player1 = tiled->getPlayer();
 
-    while(!enemies.empty()){
+    while (!enemies.empty()) {
         enemies1.push_front(enemies.front());
         enemies.pop();
     }
+    if(!multimedia.background.openFromFile("assets/backgroundMusic.ogg")){
+        cout<<"No se pudo cargar la musica"<<endl;
+    }
+    multimedia.background.setVolume(1.f);
+    multimedia.background.setLoop(true);
+    multimedia.background.play();
 
 }
 
@@ -54,14 +60,14 @@ void Game::SFMLUpdateEvents() {
 
 void Game::update() {
 
-    *time1 += clock1->getElapsedTime().asSeconds();
-
+    *time1 = clock1->getElapsedTime().asSeconds();
 
     this->SFMLUpdateEvents();
 
     this->player1->updateInputKeys(dt);
 
     //this->tiled->collisionCheck("assets/map2.tmx",tPlayer,enemies);
+
 
     bulletZombie(enemies1, bullets);
 
@@ -90,24 +96,53 @@ void Game::update() {
 
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        if(*time1 > 450.f){
-            bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
-                                         player1->getAngle() + 90));
-            *time1 = 0.f;
+    if (this->charger > 25) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            if(!multimedia.reload_buffer.loadFromFile("assets/reloadgun.wav")){
+                cout<<"no se pudo cargar el sonido"<<endl;
+            }
+            multimedia.reload_s.setBuffer(multimedia.reload_buffer);
+            multimedia.reload_s.setVolume(80.f);
+            multimedia.reload_s.play();
+            if(!multimedia.reload_shout_b.loadFromFile("assets/shout_reload.wav")){
+                cout<<"no se pudo cargar el segundo sonido"<<endl;
+            }
+            multimedia.reload_shout.setBuffer(multimedia.reload_shout_b);
+            multimedia.reload_shout.play();
+            this->charger = 0;
         }
-
     }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (*time1 > 0.3f) {
+
+            if (this->charger <= 25) {
+                bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
+                                             player1->getAngle() + 90));
+                if(!multimedia.shot_buffer.loadFromFile("assets/shot.wav")){
+                    cout<<"No se pudo abrir el sonido"<<endl;
+                }
+                multimedia.shot.setBuffer(multimedia.shot_buffer);
+                multimedia.shot.setVolume(15.f);
+                multimedia.shot.play();
+                clock1->restart();
+                this->charger++;
+            }
+        }
+    }
+
 }
 
-void Game::bulletZombie (LinkedList<Enemies*> &enemies,LinkedList<Bullet*> &bullets){
+
+void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bullets) {
     for (int i = 0; i < bullets.getSize(); ++i) {
         for (int j = 0; j < enemies.getSize(); ++j) {
-            if(bullets.get(i)->getSprite().getGlobalBounds().intersects(enemies.get(j)->getSprite().getGlobalBounds())){
+            if (bullets.get(i)->getSprite().getGlobalBounds().intersects(
+                    enemies.get(j)->getSprite().getGlobalBounds())) {
                 enemies.get(j)->setHpmax(enemies.get(j)->getHpmax() - bullets.get(i)->get_Damage());
                 delete bullets.get(i);
                 bullets.remove(i);
-                if(enemies.get(j)->getHpmax() == 0){
+                if (enemies.get(j)->getHpmax() == 0) {
                     delete enemies.get(j);
                     enemies.remove(j);
                 }
@@ -133,17 +168,17 @@ void Game::render() {
     sf::Vector2f cPos = player1->getSprite().getPosition();
 
     //Map setting
-   if(player1->getSprite().getPosition().x > 3550){
+    if (player1->getSprite().getPosition().x > 3550) {
         cPos.x = 3550;
     }
-    if(player1->getSprite().getPosition().x < 1050){
+    if (player1->getSprite().getPosition().x < 1050) {
         cPos.x = 1050;
     }
-    if(player1->getSprite().getPosition().y < 540 ){
-         cPos.y = 540;
-     }
-    if(player1->getSprite().getPosition().y > 4040){
-         cPos.y = 4040;
+    if (player1->getSprite().getPosition().y < 540) {
+        cPos.y = 540;
+    }
+    if (player1->getSprite().getPosition().y > 4040) {
+        cPos.y = 4040;
     }
 
     view.setCenter(cPos);
@@ -152,13 +187,23 @@ void Game::render() {
 
     this->window->draw(player1->getSprite());
 
-    for (enemies1.iterInit();!enemies1.iterEnd();enemies1.iterNext()) {
-            this->window->draw(enemies1.iterGet()->getSprite());
-        }
-
+    for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
+        this->window->draw(enemies1.iterGet()->getSprite());
+    }
 
     for (int i = 0; i < bullets.getSize(); ++i) {
         window->draw(bullets.get(i)->getSprite());
+    }
+    if(!multimedia.font.loadFromFile("assets/gameFont.ttf"))
+        cout<<"NO SE PUDO CARGAR UN PINGO URA"<<endl;
+
+    multimedia.reload.setFont(multimedia.font);
+    multimedia.reload.setString("Press R to RELOAD");
+    multimedia.reload.setCharacterSize(56);
+    multimedia.reload.setFillColor(sf::Color::Red);
+    multimedia.reload.setPosition(player1->getSprite().getPosition().x+50,player1->getSprite().getPosition().y+50);
+    if (this->charger > 25) {
+        this->window->draw(multimedia.reload);
     }
 
     this->window->display();
