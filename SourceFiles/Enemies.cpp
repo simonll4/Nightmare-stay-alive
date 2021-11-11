@@ -1,23 +1,29 @@
 #include "../Entities/Enemies.h"
 #include <cmath>
 
+void Enemies::initVariables()
+{
+    srand(time(NULL));
+
+    this->pointCount = rand() % 20 + 3;
+    this->points     = 5;
+    this->hpMax = 50.f;
+    this->damage = 1.f;
+    this->movementSpeed = 100.f;
+}
 
 Enemies::Enemies() {
 
     tEnemy = new sf::Texture;
     sEnemy = new sf::Sprite;
 
-    tEnemy->loadFromFile("assets/enemy.png");
+    tEnemy->loadFromFile("../assets/enemy.png");
     sEnemy->setTexture(*tEnemy);
 
     sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);
 
 
-    this->hpMax = 50.f;
-
-    this->damage = 20.f;
-
-    this->movementSpeed = 100.f;
+    this->initVariables();
 
 }
 Enemies::~Enemies() {
@@ -39,11 +45,6 @@ void Enemies::setHpmax(float hp) {
 float Enemies::getHpmax (){
     return hpMax;
 }
-
-float Enemies::getDamage(){
-    return damage;
-}
-
 
 void Enemies::move (const float& dt, float y, float x){
 
@@ -71,6 +72,18 @@ void Enemies::move (const float& dt, float y, float x){
     this->sEnemy->setRotation(angle);
 
 }
+
+const int &Enemies::getPoints() const{
+    return this->points;
+}
+
+const float &Enemies::getDamage() const
+{
+    return this->damage;
+}
+
+
+
 
 
 

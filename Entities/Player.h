@@ -3,8 +3,6 @@
 #define MAIN_CPP_PLAYER_H
 
 #include "SFML/Graphics.hpp"
-#include "SFML/Audio.hpp"
-
 
 class Player {
 private:
@@ -14,7 +12,12 @@ private:
     double a{}, b{};
     float angle;
     float movementSpeed;
-    int hp;
+
+    //Core
+    float hp;
+    float hpMax;
+
+    void initVariables();
 
 public:
     //Constructors Destructors
@@ -31,16 +34,15 @@ public:
     sf::Sprite &getSprite ();
     float getAngle () const;
 
+    //Accesors
+    const float& getHp() const;
+    const float& getHpMax() const;
+    void setHp(const float hp);
+    void loseHp(const float value);
+
     //Setters
     void setMovementSpeed (float);
-    void setHp (int);
 
-    //Getters
-    int getHp ();
-
-    //Multimedia
-    sf::SoundBuffer steps_buffer;
-    sf::Sound steps;
 };
 
 

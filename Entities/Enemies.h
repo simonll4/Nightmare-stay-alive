@@ -2,6 +2,7 @@
 #define MAIN_CPP_ENEMIES_H
 
 #include "SFML/Graphics.hpp"
+#include <time.h>
 
 class Enemies {
 private:
@@ -12,17 +13,27 @@ private:
     float hpMax;
     float damage;
     float movementSpeed;
+    int points;
+    unsigned pointCount;
+
+    //InitVariables
+    void initVariables();
 
 public:
     Enemies();
 
     ~Enemies();
 
+
+
     //Texture and Sprite
     sf::Sprite &getSprite ();
     sf::Texture &getTexture ();
+
+    const int& getPoints() const;
+    const float& getDamage() const;
+
     float getHpmax();
-    float getDamage();
     //player position
     void move (const float& dt,float x,float y);
     //Setters
@@ -31,3 +42,4 @@ public:
 
 
 #endif //MAIN_CPP_ENEMIES_H
+

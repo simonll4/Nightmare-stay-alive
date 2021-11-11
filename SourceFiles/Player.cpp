@@ -3,6 +3,12 @@
 #include <iostream>
 using namespace std;
 
+void Player::initVariables()
+{
+    this->hpMax = 50.f;
+    this->hp = this->hpMax;
+}
+
 Player::Player(sf::Texture &tPlayer){
 
 
@@ -16,7 +22,7 @@ Player::Player(sf::Texture &tPlayer){
 
     this->movementSpeed = 350.f;
 
-    hp = 60;
+    this->initVariables();
 
 }
 
@@ -27,16 +33,32 @@ sf::Sprite &Player::getSprite() {
     return *sPlayer;
 }
 
-int Player::getHp() {
-    return hp;
+void Player::setHp(const float hp)
+{
+    this->hp = hp;
+}
+
+void Player::loseHp(const float value)
+{
+    this->hp -= value;
+    if(this->hp < 0)
+    {
+        this->hp = 0;
+    }
+}
+
+const float& Player::getHp() const
+{
+    return this->hp;
+}
+
+const float& Player::getHpMax() const
+{
+    return this->hpMax;
 }
 
 void Player::setMovementSpeed(float m) {
     this->movementSpeed = m;
-}
-
-void Player::setHp(int newHp) {
-    hp = newHp;
 }
 
 void Player::move(const float& dt, const float dir_x, const float dir_y){
@@ -48,34 +70,18 @@ void Player::updateInputKeys(const float &dt) {
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         this->move(dt, 0.f, -1.f);
-        /*steps_buffer.loadFromFile("assets/footsteps.wav");
-        steps.setBuffer(steps_buffer);
-        steps.setVolume(50.f);
-        steps.play();*/
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         this->move(dt, -1.f, 0.f);
-        /*steps_buffer.loadFromFile("assets/footsteps.wav");
-        steps.setBuffer(steps_buffer);
-        steps.setVolume(50.f);
-        steps.play();*/
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         this->move(dt, 0.f, 1.f);
-        /*steps_buffer.loadFromFile("assets/footsteps.wav");
-        steps.setBuffer(steps_buffer);
-        steps.setVolume(50.f);
-        steps.play();*/
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         this->move(dt, 1.f, 0.f);
-        /*steps_buffer.loadFromFile("assets/footsteps.wav");
-        steps.setBuffer(steps_buffer);
-        steps.setVolume(50.f);
-        steps.play();*/
     }
 }
 
@@ -98,4 +104,6 @@ void Player::updateMouseCamera(sf::RenderWindow *win) {
 float Player::getAngle() const{
     return angle;
 }
+
+
 

@@ -15,6 +15,8 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <string>
+#include <sstream>
 
 
 using namespace std;
@@ -34,9 +36,16 @@ private:
     MapaTMX* tiled;
     Multimedia multimedia;
 
+    Enemies* enemies2;
 
+    //GUI
+    sf::Font font;
+    sf::Text pointText;
 
+    sf::Text gameOverText;
 
+    //Systems
+    unsigned points;
 
     //Delta time
     float dt;
@@ -45,6 +54,13 @@ private:
 
     //Initialize
     void initializeWindow();
+
+    //PlayerGUI
+    sf::RectangleShape playerHpBar;
+    sf::RectangleShape playerHpBack;
+
+    void initGUI();
+    void initSystems();
 
 
 public:
@@ -61,12 +77,15 @@ public:
 
     void updateDt();
 
+    void updateGUI();
+
     void render();
+
+    void renderGUI();
 
     void run();\
 
     void bulletZombie(LinkedList<Enemies*> &enemies1,LinkedList<Bullet*> &bullets);
-
     void playerZombie(LinkedList<Enemies*> &enemies1,Player player1);
 
     sf::Clock * clock1;
