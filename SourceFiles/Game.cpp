@@ -14,7 +14,7 @@ void Game::initializeWindow() {
 
     time1 = new float;
 
-    tiled = new MapaTMX("../assets/map2.tmx", tPlayer, enemies);
+    tiled = new MapaTMX("assets/map2.tmx", tPlayer, enemies);
 
     player1 = tiled->getPlayer();
 
@@ -22,7 +22,7 @@ void Game::initializeWindow() {
         enemies1.push_front(enemies.front());
         enemies.pop();
     }
-    if(!multimedia.background.openFromFile("../assets/backgroundMusic.ogg")){
+    if(!multimedia.background.openFromFile("assets/backgroundMusic.ogg")){
         cout<<"No se pudo cargar la musica"<<endl;
     }
     multimedia.background.setVolume(1.f);
@@ -33,7 +33,7 @@ void Game::initializeWindow() {
 
 //Constructor
 Game::Game() {
-    tPlayer.loadFromFile("../assets/text_base.png");
+    tPlayer.loadFromFile("assets/text_base.png");
     this->initializeWindow();
     this->initGUI();
     this->initSystems();
@@ -54,7 +54,7 @@ void Game::initSystems()
 void Game::initGUI()
 {
     //Load font
-    if(!this->font.loadFromFile("../assets/btseps2.TTF"))
+    if(!this->font.loadFromFile("assets/btseps2.TTF"))
     {
         std::cout << "ERROR::GAME::Failed to load font" << "\n";
     }
@@ -86,7 +86,6 @@ void Game::SFMLUpdateEvents() {
     while (this->window->pollEvent(this->sfEvent)) {
         if (this->sfEvent.type == sf::Event::Closed)
             this->window->close();
-        std::cout << player1->getHp() << std::endl;
     }
     if (sfEvent.type == sf::Event::Resized) {
         // update the view to the new size of the window
@@ -136,13 +135,13 @@ void Game::update() {
 
     if (this->charger > 25) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            if(!multimedia.reload_buffer.loadFromFile("../assets/reloadgun.wav")){
+            if(!multimedia.reload_buffer.loadFromFile("assets/reloadgun.wav")){
                 cout<<"no se pudo cargar el sonido"<<endl;
             }
             multimedia.reload_s.setBuffer(multimedia.reload_buffer);
             multimedia.reload_s.setVolume(80.f);
             multimedia.reload_s.play();
-            if(!multimedia.reload_shout_b.loadFromFile("../assets/shout_reload.wav")){
+            if(!multimedia.reload_shout_b.loadFromFile("assets/shout_reload.wav")){
                 cout<<"no se pudo cargar el segundo sonido"<<endl;
             }
             multimedia.reload_shout.setBuffer(multimedia.reload_shout_b);
@@ -157,7 +156,7 @@ void Game::update() {
             if (this->charger <= 25) {
                 bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
                                              player1->getAngle() + 90));
-                if(!multimedia.shot_buffer.loadFromFile("../assets/shot.wav")){
+                if(!multimedia.shot_buffer.loadFromFile("assets/shot.wav")){
                     cout<<"No se pudo abrir el sonido"<<endl;
                 }
                 multimedia.shot.setBuffer(multimedia.shot_buffer);
@@ -183,7 +182,8 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
                 delete bullets.get(i);
                 bullets.remove(i);
                 if (enemies.get(j)->getHpmax() == 0) {
-                    this->points += this->enemies2->getPoints();
+                    this->points += enemies.get(j)->getPoints();
+                    cout << points << endl;
                     delete enemies.get(j);
                     enemies.remove(j);
                 }
@@ -197,7 +197,6 @@ void Game::playerZombie(LinkedList<Enemies *> &enemies1, Player player1) {
     {
         if(player1.getSprite().getGlobalBounds().intersects(enemies1.get(i)->getSprite().getGlobalBounds())){
             this->player1->loseHp(0.2f);
-            std::cout << this->player1->getHp() << std::endl;
         }
     }
 }
@@ -267,7 +266,7 @@ void Game::render() {
         for (int i = 0; i < bullets.getSize(); ++i) {
             window->draw(bullets.get(i)->getSprite());
         }
-        if(!multimedia.font.loadFromFile("../assets/gameFont.ttf"))
+        if(!multimedia.font.loadFromFile("assets/gameFont.ttf"))
             cout<<"NO SE PUDO CARGAR UN PINGO URA"<<endl;
 
         multimedia.reload.setFont(multimedia.font);

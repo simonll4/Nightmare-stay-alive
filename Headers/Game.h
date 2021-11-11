@@ -36,7 +36,6 @@ private:
     MapaTMX* tiled;
     Multimedia multimedia;
 
-    Enemies* enemies2;
 
     //GUI
     sf::Font font;

@@ -5,7 +5,7 @@ void Enemies::initVariables()
 {
     srand(time(NULL));
 
-    this->pointCount = rand() % 20 + 3;
+
     this->points     = 5;
     this->hpMax = 50.f;
     this->damage = 1.f;
@@ -17,7 +17,7 @@ Enemies::Enemies() {
     tEnemy = new sf::Texture;
     sEnemy = new sf::Sprite;
 
-    tEnemy->loadFromFile("../assets/enemy.png");
+    tEnemy->loadFromFile("assets/enemy.png");
     sEnemy->setTexture(*tEnemy);
 
     sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);
