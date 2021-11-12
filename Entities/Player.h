@@ -9,6 +9,7 @@ private:
     sf::Sprite *sPlayer;
     sf::Vector2i mouse;
     sf::Vector2f playerPos;
+    sf::Vector2f oldPlayerPos;
     double a{}, b{};
     float angle;
     float movementSpeed;
@@ -43,6 +44,7 @@ public:
     //Setters
     void setMovementSpeed (float);
 
+    void goBack();
 };
 
 

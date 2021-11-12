@@ -23,7 +23,7 @@ private:
     sf::Vector2u tile_size;
     uint32_t columns;
     Player *player;
-
+    LinkedList<sf::FloatRect *> objetos;
 
 public:
 
@@ -79,7 +79,7 @@ public:
                         player->getSprite().setPosition(objects[j].getPosition().x, objects[j].getPosition().y);
                     }
                     if (objects[j].getName() == "zombies") {
-                        Enemies *enemy = new Enemies();
+                        auto *enemy = new Enemies();
                         enemy->getSprite().setPosition(objects[j].getPosition().x, objects[j].getPosition().y);
                         enemy->getSprite().setScale(0.5f, 0.5f);
                         enemy->getSprite().setOrigin((float) enemy->getTexture().getSize().x / 2,
@@ -88,13 +88,11 @@ public:
 
 
                     }
-                    /*if (objects[j].getName() == "Objeto") {
-                        sf::Rect<float> ogb(objects[j].getAABB().left, objects[j].getAABB().top,
-                                            objects[j].getAABB().width, objects[j].getAABB().height);
-                        if (player->getSprite().getGlobalBounds().intersects(ogb)) {
-                            player->setMovementSpeed(0.f);
-                        }
-                    }*/
+                    if (objects[j].getName() == "Objeto") {
+                        auto *obj = new sf::FloatRect(objects[j].getAABB().left, objects[j].getAABB().top,
+                                                      objects[j].getAABB().width, objects[j].getAABB().height);
+                        objetos.push_front(obj);
+                    }
                 }
             }
         }
@@ -105,13 +103,30 @@ public:
         for (sprites.iterInit(); !sprites.iterEnd(); sprites.iterNext()) {
             w.draw(*sprites.iterGet());
         }
-
+        if (true) {
+            for (objetos.iterInit(); !objetos.iterEnd(); objetos.iterNext()) {
+                sf::FloatRect *aux = objetos.iterGet();
+                sf::RectangleShape p({aux->width, aux->height});
+                p.setPosition({aux->left, aux->top});
+                p.setOutlineColor(sf::Color::Blue);
+                p.setFillColor(sf::Color::Transparent);
+                p.setOutlineThickness(3);
+                w.draw(p);
+            }
+        }
     }
 
     Player *getPlayer() {
         return player;
     }
 
+    bool collitionCheck(sf::FloatRect rect) {
+        for (objetos.iterInit(); !objetos.iterEnd(); objetos.iterNext()) {
+            if (objetos.iterGet()->intersects(rect))
+                return true;
+        }
+        return false;
+    }
     /*void collisionCheck (const string &archivo, sf::Texture &pl_tx, queue<Enemies *> &enemies){
         tile_size.x = map.getTileSize().x;
         tile_size.y = map.getTileSize().y;

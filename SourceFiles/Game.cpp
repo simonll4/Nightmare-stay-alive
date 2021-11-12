@@ -22,14 +22,14 @@ void Game::initializeWindow() {
         enemies1.push_front(enemies.front());
         enemies.pop();
     }
-    if(!multimedia.background.openFromFile("assets/backgroundMusic.ogg")){
-        cout<<"No se pudo cargar la musica"<<endl;
+    if (!multimedia.background.openFromFile("assets/backgroundMusic.ogg")) {
+        cout << "No se pudo cargar la musica" << endl;
     }
     multimedia.background.setVolume(1.f);
     multimedia.background.setLoop(true);
     multimedia.background.play();
 
-    if(this->player1->getHp() <= 0) {
+    if (this->player1->getHp() <= 0) {
         if (!this->multimedia.final.openFromFile("assets/death_final_1.ogg")) {
             cout << "No se pudo cargar el audio" << endl;
         }
@@ -55,16 +55,13 @@ Game::~Game() {
 
 }
 
-void Game::initSystems()
-{
+void Game::initSystems() {
     this->points = 0;
 }
 
-void Game::initGUI()
-{
+void Game::initGUI() {
     //Load font
-    if(!this->font.loadFromFile("assets/btseps2.TTF"))
-    {
+    if (!this->font.loadFromFile("assets/btseps2.TTF")) {
         std::cout << "ERROR::GAME::Failed to load font" << "\n";
     }
 
@@ -78,7 +75,8 @@ void Game::initGUI()
     this->gameOverText.setCharacterSize(300);
     this->gameOverText.setFillColor(sf::Color::Red);
     this->gameOverText.setString("GAME OVER");
-    this->gameOverText.setOrigin(this->gameOverText.getGlobalBounds().width / 2,this->gameOverText.getGlobalBounds().height / 2);
+    this->gameOverText.setOrigin(this->gameOverText.getGlobalBounds().width / 2,
+                                 this->gameOverText.getGlobalBounds().height / 2);
 
 
     this->playerHpBar.setSize(sf::Vector2f(250.f, 15.f));
@@ -108,6 +106,9 @@ void Game::update() {
     *time1 = clock1->getElapsedTime().asSeconds();
 
     this->player1->updateInputKeys(dt);
+    if (tiled->collitionCheck(player1->getSprite().getGlobalBounds())) {
+        player1->goBack();
+    }
 
     this->updateGUI();
 
@@ -131,9 +132,9 @@ void Game::update() {
     for (int i = 0; i < bullets.getSize(); i++) {
 
         if (bullets.get(i)->getSprite().getPosition().x < view.getCenter().x - view.getSize().x / 2 ||
-        bullets.get(i)->getSprite().getPosition().x > view.getCenter().x + view.getSize().x / 2 ||
-        bullets.get(i)->getSprite().getPosition().y < view.getCenter().y - view.getSize().y / 2 ||
-        bullets.get(i)->getSprite().getPosition().y > view.getCenter().y + view.getSize().y / 2) {
+            bullets.get(i)->getSprite().getPosition().x > view.getCenter().x + view.getSize().x / 2 ||
+            bullets.get(i)->getSprite().getPosition().y < view.getCenter().y - view.getSize().y / 2 ||
+            bullets.get(i)->getSprite().getPosition().y > view.getCenter().y + view.getSize().y / 2) {
 
             delete this->bullets.get(i);
             this->bullets.remove(i);
@@ -144,14 +145,14 @@ void Game::update() {
 
     if (this->charger > 25) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            if(!multimedia.reload_buffer.loadFromFile("assets/reloadgun.wav")){
-                cout<<"no se pudo cargar el sonido"<<endl;
+            if (!multimedia.reload_buffer.loadFromFile("assets/reloadgun.wav")) {
+                cout << "no se pudo cargar el sonido" << endl;
             }
             multimedia.reload_s.setBuffer(multimedia.reload_buffer);
             multimedia.reload_s.setVolume(80.f);
             multimedia.reload_s.play();
-            if(!multimedia.reload_shout_b.loadFromFile("assets/shout_reload.wav")){
-                cout<<"no se pudo cargar el segundo sonido"<<endl;
+            if (!multimedia.reload_shout_b.loadFromFile("assets/shout_reload.wav")) {
+                cout << "no se pudo cargar el segundo sonido" << endl;
             }
             multimedia.reload_shout.setBuffer(multimedia.reload_shout_b);
             multimedia.reload_shout.play();
@@ -165,8 +166,8 @@ void Game::update() {
             if (this->charger <= 25) {
                 bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
                                              player1->getAngle() + 90));
-                if(!multimedia.shot_buffer.loadFromFile("assets/shot.wav")){
-                    cout<<"No se pudo abrir el sonido"<<endl;
+                if (!multimedia.shot_buffer.loadFromFile("assets/shot.wav")) {
+                    cout << "No se pudo abrir el sonido" << endl;
                 }
                 multimedia.shot.setBuffer(multimedia.shot_buffer);
                 multimedia.shot.setVolume(15.f);
@@ -178,7 +179,6 @@ void Game::update() {
     }
 
 
-
 }
 
 
@@ -187,8 +187,8 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
         for (int j = 0; j < enemies.getSize(); ++j) {
             if (bullets.get(i)->getSprite().getGlobalBounds().intersects(
                     enemies.get(j)->getSprite().getGlobalBounds())) {
-                if(!this->multimedia.zombie_bullet_buffer.loadFromFile("assets/zombiegrr.wav")){
-                    cout<<"No se pudo cargar el audio"<<endl;
+                if (!this->multimedia.zombie_bullet_buffer.loadFromFile("assets/zombiegrr.wav")) {
+                    cout << "No se pudo cargar el audio" << endl;
                 }
                 this->multimedia.zombie_bullet.setBuffer(this->multimedia.zombie_bullet_buffer);
                 this->multimedia.zombie_bullet.setVolume(50);
@@ -208,24 +208,25 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
 }
 
 void Game::playerZombie(LinkedList<Enemies *> &enemies1, Player player1) {
-    for (int i = 0; i < enemies1.getSize(); ++i)
-    {
-        if(player1.getSprite().getGlobalBounds().intersects(enemies1.get(i)->getSprite().getGlobalBounds())){
+    for (int i = 0; i < enemies1.getSize(); ++i) {
+        if (player1.getSprite().getGlobalBounds().intersects(enemies1.get(i)->getSprite().getGlobalBounds())) {
             this->player1->loseHp(0.2f);
         }
     }
 }
 
-void Game::updateGUI()
-{
+void Game::updateGUI() {
     std::stringstream ss;
     ss << "Points: " << this->points;
     this->pointText.setString(ss.str());
-    this->pointText.setPosition(player1->getSprite().getPosition().x - window->getSize().x / 2,player1->getSprite().getPosition().y - window->getSize().y / 2);
+    this->pointText.setPosition(player1->getSprite().getPosition().x - window->getSize().x / 2,
+                                player1->getSprite().getPosition().y - window->getSize().y / 2);
 
-    this->gameOverText.setPosition(this->player1->getSprite().getPosition().x - 325, this->player1->getSprite().getPosition().y - 200);
+    this->gameOverText.setPosition(this->player1->getSprite().getPosition().x - 325,
+                                   this->player1->getSprite().getPosition().y - 200);
 
-    this->playerHpBar.setPosition(sf::Vector2f(this->player1->getSprite().getPosition().x - 70.f, this->player1->getSprite().getPosition().y - 100.f));
+    this->playerHpBar.setPosition(sf::Vector2f(this->player1->getSprite().getPosition().x - 70.f,
+                                               this->player1->getSprite().getPosition().y - 100.f));
 
     //Update playerGUI
     this->player1->setHp(this->player1->getHp());
@@ -239,8 +240,7 @@ void Game::updateDt() {
     this->dt = this->dtClock.restart().asSeconds();
 }
 
-void Game::renderGUI()
-{
+void Game::renderGUI() {
     this->window->draw(this->pointText);
     this->window->draw(this->playerHpBack);
     this->window->draw(this->playerHpBar);
@@ -251,8 +251,7 @@ void Game::render() {
 
     this->window->clear();
 
-    if(this->player1->getHp()>0)
-    {
+    if (this->player1->getHp() > 0) {
         this->tiled->dibujar(*window);
         player1->getSprite().setScale(0.5f, 0.5f);
         sf::Vector2f cPos = player1->getSprite().getPosition();
@@ -276,6 +275,13 @@ void Game::render() {
         window->setView(view);
 
         this->window->draw(player1->getSprite());
+        sf::FloatRect aux = player1->getSprite().getGlobalBounds();
+        sf::RectangleShape p({aux.width, aux.height});
+        p.setPosition({aux.left, aux.top});
+        p.setOutlineColor(sf::Color::Green);
+        p.setFillColor(sf::Color::Transparent);
+        p.setOutlineThickness(3);
+        this->window->draw(p);
 
         for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
             this->window->draw(enemies1.iterGet()->getSprite());
@@ -284,31 +290,29 @@ void Game::render() {
         for (int i = 0; i < bullets.getSize(); ++i) {
             window->draw(bullets.get(i)->getSprite());
         }
-        if(!multimedia.font.loadFromFile("assets/gameFont.ttf"))
-            cout<<"NO SE PUDO CARGAR LA FUENTE"<<endl;
+        if (!multimedia.font.loadFromFile("assets/gameFont.ttf"))
+            cout << "NO SE PUDO CARGAR LA FUENTE" << endl;
 
         multimedia.reload.setFont(multimedia.font);
         multimedia.reload.setString("Press R to RELOAD");
         multimedia.reload.setCharacterSize(56);
         multimedia.reload.setFillColor(sf::Color::Red);
-        multimedia.reload.setPosition(player1->getSprite().getPosition().x+50,player1->getSprite().getPosition().y+50);
+        multimedia.reload.setPosition(player1->getSprite().getPosition().x + 50,
+                                      player1->getSprite().getPosition().y + 50);
         if (this->charger > 25) {
             this->window->draw(multimedia.reload);
         }
 
         this->renderGUI();
-    }
-
-    else if(this->player1->getHp() == 0)
-    {
+    } else if (this->player1->getHp() == 0) {
         this->player1->setHp(-1);
-        if(!this->multimedia.final.openFromFile("assets/death_final_1.ogg")){
+        if (!this->multimedia.final.openFromFile("assets/death_final_1.ogg")) {
             cout << "No se pudo cargar el audio" << endl;
         }
         this->multimedia.background.stop();
         this->multimedia.final.setVolume(75);
         this->multimedia.final.play();
-        if(multimedia.final.Playing){
+        if (multimedia.final.Playing) {
             this->window->draw(this->gameOverText);
         }
 
@@ -325,8 +329,7 @@ void Game::run() {
 
         //Update frame
 
-        if(this->player1->getHp() > 0)
-        {
+        if (this->player1->getHp() > 0) {
             this->SFMLUpdateEvents();
             this->update();
         }

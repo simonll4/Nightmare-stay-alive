@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="144" height="144" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="177">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="144" height="144" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="195">
  <tileset firstgid="1" name="map1.png" tilewidth="32" tileheight="32" tilecount="22308" columns="156">
   <image source="map1.png" width="5000" height="4578"/>
  </tileset>
@@ -155,7 +155,13 @@
   <object id="171" name="player" x="2216" y="1806.67">
    <point/>
   </object>
-  <object id="175" name="zombies" x="4472" y="1909.33">
+  <object id="175" name="zombies" x="3620" y="1296">
+   <properties>
+    <property name="vida" type="int" value="5"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="194" name="zombies" x="3572.97" y="2446.3">
    <properties>
     <property name="vida" type="int" value="5"/>
    </properties>
@@ -342,7 +348,6 @@
   <object id="139" name="Objeto" x="4518" y="4188" width="92" height="163"/>
   <object id="141" name="Objeto" x="4238" y="3409" width="184" height="437"/>
   <object id="143" name="Objeto" x="4205.4" y="2724.28" width="187.148" height="431.778" rotation="355.016"/>
-  <object id="144" name="Objeto" x="3432.05" y="1635.82" width="682.667" height="233.333" rotation="344.867"/>
   <object id="145" name="Objeto" x="4096" y="1.33333">
    <polygon points="0,0 -2.66667,640 22.6667,610.667 40,610.667 158.667,428 328,398.667 506.667,265.333 510.667,2.66667"/>
   </object>
@@ -386,8 +391,20 @@
   <object id="170" name="Objeto" x="1885.5" y="2527.5">
    <polygon points="0,0 28,0.5 34,3 109.5,0.5 115,4 116,10 111.5,16 107.5,16 38.5,18 47,136.5 124,140.5 129.5,146.5 128.5,153.5 119.5,157.5 82,154.5 67.5,152 40.5,154.5 1.5,156 -1,151 0,146.5 21.5,145.5 28,137.5 31.5,127 26,26.5 14.1364,10.5 1.22727,10.8636 -2.40909,9.04545 -2.22727,4.68182"/>
   </object>
-  <object id="176" x="-16" y="-66">
-   <polygon points="8,19.5 8,4628 4615.67,4627.67 4615.5,20.5 7.75,19.75"/>
-  </object>
+  <object id="179" name="Objeto" x="3458" y="1588" width="122" height="162"/>
+  <object id="180" name="Objeto" x="3490" y="1749" width="107" height="67"/>
+  <object id="181" name="Objeto" x="3508" y="1571" width="166" height="34"/>
+  <object id="182" name="Objeto" x="3636" y="1542" width="172" height="44"/>
+  <object id="183" name="Objeto" x="3770" y="1525" width="100" height="29"/>
+  <object id="184" name="Objeto" x="3828" y="1506" width="123" height="31"/>
+  <object id="185" name="Objeto" x="3869" y="1487" width="119" height="21"/>
+  <object id="186" name="Objeto" x="3886" y="1459" width="184" height="44"/>
+  <object id="187" name="Objeto" x="4042" y="1471" width="69" height="143"/>
+  <object id="188" name="Objeto" x="3868" y="1598" width="187" height="44"/>
+  <object id="189" name="Objeto" x="3684" y="1625" width="309" height="41"/>
+  <object id="190" name="Objeto" x="3534" y="1705" width="184" height="39"/>
+  <object id="191" name="Objeto" x="3547" y="1735" width="123" height="32"/>
+  <object id="192" name="Objeto" x="3631" y="1659" width="178" height="27"/>
+  <object id="193" name="Objeto" x="3624" y="1680" width="143" height="32"/>
  </objectgroup>
 </map>
