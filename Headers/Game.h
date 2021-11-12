@@ -17,6 +17,7 @@
 #include <queue>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 
 using namespace std;
@@ -49,7 +50,8 @@ private:
     //Delta time
     float dt;
     sf::Clock dtClock;
-    sf::Time elapsedTime;
+    float elapsedTime = 0;
+
 
     //Initialize
     void initializeWindow();
@@ -82,7 +84,7 @@ public:
 
     void renderGUI();
 
-    void run();\
+    void run();
 
     void bulletZombie(LinkedList<Enemies*> &enemies1,LinkedList<Bullet*> &bullets);
     void playerZombie(LinkedList<Enemies*> &enemies1,Player player1);
@@ -90,6 +92,7 @@ public:
     sf::Clock * clock1;
     float * time1;
     int charger = 0;
+    sf::Clock gameTime;
 
 
 };

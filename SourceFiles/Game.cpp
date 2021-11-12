@@ -181,10 +181,9 @@ void Game::update() {
 
 }
 
-
 void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bullets) {
-    for (int i = 0; i < bullets.getSize(); ++i) {
-        for (int j = 0; j < enemies.getSize(); ++j) {
+    for (int j = 0; j < enemies.getSize(); ++j) {
+        for (int i = 0; i < bullets.getSize(); ++i) {
             if (bullets.get(i)->getSprite().getGlobalBounds().intersects(
                     enemies.get(j)->getSprite().getGlobalBounds())) {
                 if (!this->multimedia.zombie_bullet_buffer.loadFromFile("assets/zombiegrr.wav")) {
@@ -221,6 +220,7 @@ void Game::updateGUI() {
     this->pointText.setString(ss.str());
     this->pointText.setPosition(player1->getSprite().getPosition().x - window->getSize().x / 2,
                                 player1->getSprite().getPosition().y - window->getSize().y / 2);
+
 
     this->gameOverText.setPosition(this->player1->getSprite().getPosition().x - 325,
                                    this->player1->getSprite().getPosition().y - 200);
@@ -304,37 +304,53 @@ void Game::render() {
         }
 
         this->renderGUI();
-    } else if (this->player1->getHp() == 0) {
-        this->player1->setHp(-1);
-        if (!this->multimedia.final.openFromFile("assets/death_final_1.ogg")) {
-            cout << "No se pudo cargar el audio" << endl;
-        }
-        this->multimedia.background.stop();
-        this->multimedia.final.setVolume(75);
-        this->multimedia.final.play();
-        if (multimedia.final.Playing) {
-            this->window->draw(this->gameOverText);
-        }
+
+    } else {
+        this->window->draw(this->gameOverText);
+        ofstream leaderboard;
+        leaderboard.open("Leaderboard.txt", ios::app);
+        leaderboard << "Ultima Partida" << "\n" << "Puntos: " << points << "\n" << "Tiempo: "
+                    << gameTime.getElapsedTime().asSeconds() << " Segundos " << endl;
+        leaderboard << endl;
+        leaderboard.close();
 
     }
-
     this->window->display();
 }
 
 void Game::run() {
     while (this->window->isOpen()) {
-
-        //Update clock
-        this->updateDt();
-
-        //Update frame
-
         if (this->player1->getHp() > 0) {
-            this->SFMLUpdateEvents();
-            this->update();
-        }
+            //Update clock
+            this->updateDt();
 
-        //Render frame
-        this->render();
+            //Update window events
+            this->SFMLUpdateEvents();
+
+            //Update frame
+            this->update();
+
+            //Render frame
+            this->render();
+
+        } else if (this->player1->getHp() <= 0) {
+            this->multimedia.background.stop();
+
+            if(elapsedTime == 0){
+                if (!this->multimedia.final.openFromFile("assets/death_final_1.ogg")) {
+                    cout << "No se pudo cargar el audio" << endl;
+                }
+                this->multimedia.final.setVolume(75);
+                this->multimedia.final.play();
+                elapsedTime = 1;
+            }
+
+            elapsedTime++;
+            cout << this->elapsedTime << endl;
+            if (this->elapsedTime > 10000) {
+                this->window->close();
+            }
+        }
     }
 }
+

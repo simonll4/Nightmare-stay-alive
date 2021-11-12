@@ -7,8 +7,8 @@ void Enemies::initVariables()
 
 
     this->points     = 5;
-    this->hpMax = 50.f;
-    this->damage = 1.f;
+    this->hpMax = 80.f;
+    this->damage = 0.5f;
     this->movementSpeed = 100.f;
 }
 

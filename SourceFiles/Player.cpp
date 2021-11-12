@@ -5,7 +5,7 @@
 using namespace std;
 
 void Player::initVariables() {
-    this->hpMax = 50.f;
+    this->hpMax = 100.f;
     this->hp = this->hpMax;
 }
 
