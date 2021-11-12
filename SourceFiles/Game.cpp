@@ -29,6 +29,15 @@ void Game::initializeWindow() {
     multimedia.background.setLoop(true);
     multimedia.background.play();
 
+    if(this->player1->getHp() <= 0) {
+        if (!this->multimedia.final.openFromFile("assets/death_final_1.ogg")) {
+            cout << "No se pudo cargar el audio" << endl;
+        }
+        this->multimedia.background.stop();
+        this->multimedia.final.setVolume(75);
+        this->multimedia.final.setLoop(true);
+        this->multimedia.final.play();
+    }
 }
 
 //Constructor
@@ -61,7 +70,7 @@ void Game::initGUI()
 
     //init point text
     this->pointText.setFont(this->font);
-    this->pointText.setCharacterSize(20);
+    this->pointText.setCharacterSize(50);
     this->pointText.setFillColor(sf::Color::Red);
     this->pointText.setString("test");
 
@@ -70,7 +79,7 @@ void Game::initGUI()
     this->gameOverText.setFillColor(sf::Color::Red);
     this->gameOverText.setString("GAME OVER");
     this->gameOverText.setOrigin(this->gameOverText.getGlobalBounds().width / 2,this->gameOverText.getGlobalBounds().height / 2);
-    this->gameOverText.setPosition(this->player1->getSprite().getPosition().x, this->player1->getSprite().getPosition().y);
+
 
     this->playerHpBar.setSize(sf::Vector2f(250.f, 15.f));
     this->playerHpBar.setFillColor(sf::Color::Green);
@@ -178,6 +187,12 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
         for (int j = 0; j < enemies.getSize(); ++j) {
             if (bullets.get(i)->getSprite().getGlobalBounds().intersects(
                     enemies.get(j)->getSprite().getGlobalBounds())) {
+                if(!this->multimedia.zombie_bullet_buffer.loadFromFile("assets/zombiegrr.wav")){
+                    cout<<"No se pudo cargar el audio"<<endl;
+                }
+                this->multimedia.zombie_bullet.setBuffer(this->multimedia.zombie_bullet_buffer);
+                this->multimedia.zombie_bullet.setVolume(50);
+                this->multimedia.zombie_bullet.play();
                 enemies.get(j)->setHpmax(enemies.get(j)->getHpmax() - bullets.get(i)->get_Damage());
                 delete bullets.get(i);
                 bullets.remove(i);
@@ -204,8 +219,11 @@ void Game::playerZombie(LinkedList<Enemies *> &enemies1, Player player1) {
 void Game::updateGUI()
 {
     std::stringstream ss;
-    ss << "Points" << this->points;
+    ss << "Points: " << this->points;
     this->pointText.setString(ss.str());
+    this->pointText.setPosition(player1->getSprite().getPosition().x - window->getSize().x / 2,player1->getSprite().getPosition().y - window->getSize().y / 2);
+
+    this->gameOverText.setPosition(this->player1->getSprite().getPosition().x - 325, this->player1->getSprite().getPosition().y - 200);
 
     this->playerHpBar.setPosition(sf::Vector2f(this->player1->getSprite().getPosition().x - 70.f, this->player1->getSprite().getPosition().y - 100.f));
 
@@ -240,17 +258,17 @@ void Game::render() {
         sf::Vector2f cPos = player1->getSprite().getPosition();
 
         //Map setting
-        if (player1->getSprite().getPosition().x > 3550) {
-            cPos.x = 3550;
+        if (player1->getSprite().getPosition().x > 3200) {
+            cPos.x = 3200;
         }
-        if (player1->getSprite().getPosition().x < 1050) {
-            cPos.x = 1050;
+        if (player1->getSprite().getPosition().x < 1400) {
+            cPos.x = 1400;
         }
-        if (player1->getSprite().getPosition().y < 540) {
-            cPos.y = 540;
+        if (player1->getSprite().getPosition().y < 800) {
+            cPos.y = 800;
         }
-        if (player1->getSprite().getPosition().y > 4040) {
-            cPos.y = 4040;
+        if (player1->getSprite().getPosition().y > 3760) {
+            cPos.y = 3760;
         }
 
         view.setCenter(cPos);
@@ -267,7 +285,7 @@ void Game::render() {
             window->draw(bullets.get(i)->getSprite());
         }
         if(!multimedia.font.loadFromFile("assets/gameFont.ttf"))
-            cout<<"NO SE PUDO CARGAR UN PINGO URA"<<endl;
+            cout<<"NO SE PUDO CARGAR LA FUENTE"<<endl;
 
         multimedia.reload.setFont(multimedia.font);
         multimedia.reload.setString("Press R to RELOAD");
@@ -281,9 +299,19 @@ void Game::render() {
         this->renderGUI();
     }
 
-    else if(this->player1->getHp() <= 0)
+    else if(this->player1->getHp() == 0)
     {
-        this->window->draw(this->gameOverText);
+        this->player1->setHp(-1);
+        if(!this->multimedia.final.openFromFile("assets/death_final_1.ogg")){
+            cout << "No se pudo cargar el audio" << endl;
+        }
+        this->multimedia.background.stop();
+        this->multimedia.final.setVolume(75);
+        this->multimedia.final.play();
+        if(multimedia.final.Playing){
+            this->window->draw(this->gameOverText);
+        }
+
     }
 
     this->window->display();
