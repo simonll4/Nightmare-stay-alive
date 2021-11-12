@@ -27,6 +27,7 @@ class Game {
 private:
     //Variables
     sf::RenderWindow *window;
+    sf::RenderWindow *leaderboard;
     sf::Event sfEvent;
     Player* player1;
     queue<Enemies*> enemies;
@@ -36,12 +37,17 @@ private:
     sf::Texture tPlayer;
     MapaTMX* tiled;
     Multimedia multimedia;
+    stack<int> charger;
+
+
+
 
 
     //GUI
     sf::Font font;
     sf::Text pointText;
 
+   //text
     sf::Text gameOverText;
 
     //Systems
@@ -51,7 +57,9 @@ private:
     float dt;
     sf::Clock dtClock;
     float elapsedTime = 0;
-
+    sf::Clock * clock1;
+    float * time1;
+    sf::Clock gameTime;
 
     //Initialize
     void initializeWindow();
@@ -89,10 +97,7 @@ public:
     void bulletZombie(LinkedList<Enemies*> &enemies1,LinkedList<Bullet*> &bullets);
     void playerZombie(LinkedList<Enemies*> &enemies1,Player player1);
 
-    sf::Clock * clock1;
-    float * time1;
-    int charger = 0;
-    sf::Clock gameTime;
+
 
 
 };

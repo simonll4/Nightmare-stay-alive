@@ -18,6 +18,11 @@ void Game::initializeWindow() {
 
     player1 = tiled->getPlayer();
 
+    for (int i = 0; i < 17; ++i) {
+        charger.push(1);
+    }
+    cout << charger.size() << endl;
+
     while (!enemies.empty()) {
         enemies1.push_front(enemies.front());
         enemies.pop();
@@ -143,7 +148,7 @@ void Game::update() {
 
     }
 
-    if (this->charger > 25) {
+    if (charger.empty()) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
             if (!multimedia.reload_buffer.loadFromFile("assets/reloadgun.wav")) {
                 cout << "no se pudo cargar el sonido" << endl;
@@ -156,14 +161,17 @@ void Game::update() {
             }
             multimedia.reload_shout.setBuffer(multimedia.reload_shout_b);
             multimedia.reload_shout.play();
-            this->charger = 0;
+            for (int i = 0; i < 17; ++i) {
+                charger.push(1);
+            }
+
         }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         if (*time1 > 0.3f) {
 
-            if (this->charger <= 25) {
+            if (!this->charger.empty()) {
                 bullets.push_back(new Bullet(player1->getSprite().getPosition().x, player1->getSprite().getPosition().y,
                                              player1->getAngle() + 90));
                 if (!multimedia.shot_buffer.loadFromFile("assets/shot.wav")) {
@@ -173,7 +181,9 @@ void Game::update() {
                 multimedia.shot.setVolume(15.f);
                 multimedia.shot.play();
                 clock1->restart();
-                this->charger++;
+                this->charger.pop();
+                cout << charger.size() << endl;
+
             }
         }
     }
@@ -275,13 +285,7 @@ void Game::render() {
         window->setView(view);
 
         this->window->draw(player1->getSprite());
-        sf::FloatRect aux = player1->getSprite().getGlobalBounds();
-        sf::RectangleShape p({aux.width, aux.height});
-        p.setPosition({aux.left, aux.top});
-        p.setOutlineColor(sf::Color::Green);
-        p.setFillColor(sf::Color::Transparent);
-        p.setOutlineThickness(3);
-        this->window->draw(p);
+        
 
         for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
             this->window->draw(enemies1.iterGet()->getSprite());
@@ -299,7 +303,7 @@ void Game::render() {
         multimedia.reload.setFillColor(sf::Color::Red);
         multimedia.reload.setPosition(player1->getSprite().getPosition().x + 50,
                                       player1->getSprite().getPosition().y + 50);
-        if (this->charger > 25) {
+        if (this->charger.empty()) {
             this->window->draw(multimedia.reload);
         }
 

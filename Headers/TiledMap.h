@@ -103,17 +103,6 @@ public:
         for (sprites.iterInit(); !sprites.iterEnd(); sprites.iterNext()) {
             w.draw(*sprites.iterGet());
         }
-        if (true) {
-            for (objetos.iterInit(); !objetos.iterEnd(); objetos.iterNext()) {
-                sf::FloatRect *aux = objetos.iterGet();
-                sf::RectangleShape p({aux->width, aux->height});
-                p.setPosition({aux->left, aux->top});
-                p.setOutlineColor(sf::Color::Blue);
-                p.setFillColor(sf::Color::Transparent);
-                p.setOutlineThickness(3);
-                w.draw(p);
-            }
-        }
     }
 
     Player *getPlayer() {
