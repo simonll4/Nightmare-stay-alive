@@ -1,57 +1,52 @@
+Datos de Partida
+Puntos: 60
+Tiempo: 68.8264 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 22.8985 Segundos 
+Datos de Partida
+Puntos: 30
+Tiempo: 43.9655 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 22.8826 Segundos 
+Datos de Partida
+Puntos: 60
+Tiempo: 48.0679 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 21.269 Segundos 
+Datos de Partida
+Puntos: 60
+Tiempo: 44.476 Segundos 
 
-Ultima Partida
+Datos de Partida
 Puntos: 5
-Tiempo: 22.0563 Segundos 
+Tiempo: 19.4241 Segundos 
 
-Ultima Partida
+Datos de Partida
+Puntos: 20
+Tiempo: 21.657 Segundos 
+
+Datos de Partida
 Puntos: 0
-Tiempo: 21.5203 Segundos 
+Tiempo: 16.1413 Segundos 
 
-Ultima Partida
+Datos de Partida
 Puntos: 0
-Tiempo: 21.4313 Segundos 
+Tiempo: 16.0141 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 21.3784 Segundos 
-
-Ultima Partida
-Puntos: 0
-Tiempo: 21.548 Segundos 
-
-Ultima Partida
-Puntos: 0
-Tiempo: 59.7095 Segundos 
-
-Ultima Partida
+Datos de Partida
 Puntos: 5
-Tiempo: 21.6337 Segundos 
+Tiempo: 17.6386 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 21.419 Segundos 
+Datos de Partida
+Puntos: 20
+Tiempo: 20.1041 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 21.4773 Segundos 
+Datos de Partida
+Puntos: 60
+Tiempo: 44.881 Segundos 
 
-Ultima Partida
-Puntos: 0
-Tiempo: 23.0414 Segundos 
+Datos de Partida
+Puntos: 60
+Tiempo: 48.9892 Segundos 
 
-Ultima Partida
+Datos de Partida
 Puntos: 0
-Tiempo: 39.8032 Segundos 
+Tiempo: 12.9478 Segundos 
 

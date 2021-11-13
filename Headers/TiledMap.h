@@ -109,36 +109,14 @@ public:
         return player;
     }
 
-    bool collitionCheck(sf::FloatRect rect) {
+    bool collisionCheck(sf::FloatRect rect) {
         for (objetos.iterInit(); !objetos.iterEnd(); objetos.iterNext()) {
             if (objetos.iterGet()->intersects(rect))
                 return true;
         }
         return false;
     }
-    /*void collisionCheck (const string &archivo, sf::Texture &pl_tx, queue<Enemies *> &enemies){
-        tile_size.x = map.getTileSize().x;
-        tile_size.y = map.getTileSize().y;
-        const auto &tileSet = map.getTilesets();
-        textura.loadFromFile(tileSet[0].getImagePath());
-        columns = tileSet[0].getColumnCount();
-        const auto &layers = map.getLayers();
-        for (int i = 0; i < layers.size(); ++i) {
-            if (layers[i]->getType() == tmx::Layer::Type::Object) {
-                const auto &objectLayer = layers[i]->getLayerAs<tmx::ObjectGroup>();
-                const auto &objects = objectLayer.getObjects();
-                for (int j = 0; j < objects.size(); ++j) {
-                    if (objects[j].getName() == "Objeto") {
-                        sf::Rect<float> ogb(objects[j].getAABB().left, objects[j].getAABB().top,
-                                            objects[j].getAABB().width, objects[j].getAABB().height);
-                        if (player->getSprite().getGlobalBounds().intersects(ogb)) {
-                            player->setMovementSpeed(0.f);
-                        }
-                    }
-                }
-            }
-        }
-    }*/
+
 };
 
 

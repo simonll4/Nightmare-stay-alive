@@ -4,9 +4,12 @@
 //Inicializadores
 void Game::initializeWindow() {
 
+    this->leaderboard = new sf::RenderWindow(sf::VideoMode(1280, 720), "Leaderboard");
     this->window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Nightmare!");
+
     int fps = 60;
     window->setFramerateLimit(fps);
+    leaderboard->setFramerateLimit(fps);
     view.reset(sf::FloatRect(0, 0, (float) window->getSize().x, (float) window->getSize().y));
     view.zoom(2.2f);
 
@@ -21,7 +24,6 @@ void Game::initializeWindow() {
     for (int i = 0; i < 17; ++i) {
         charger.push(1);
     }
-    cout << charger.size() << endl;
 
     while (!enemies.empty()) {
         enemies1.push_front(enemies.front());
@@ -57,6 +59,7 @@ Game::Game() {
 Game::~Game() {
 
     delete this->window;
+    delete this->leaderboard;
 
 }
 
@@ -75,13 +78,6 @@ void Game::initGUI() {
     this->pointText.setCharacterSize(50);
     this->pointText.setFillColor(sf::Color::Red);
     this->pointText.setString("test");
-
-    this->gameOverText.setFont(this->font);
-    this->gameOverText.setCharacterSize(300);
-    this->gameOverText.setFillColor(sf::Color::Red);
-    this->gameOverText.setString("GAME OVER");
-    this->gameOverText.setOrigin(this->gameOverText.getGlobalBounds().width / 2,
-                                 this->gameOverText.getGlobalBounds().height / 2);
 
 
     this->playerHpBar.setSize(sf::Vector2f(250.f, 15.f));
@@ -104,6 +100,12 @@ void Game::SFMLUpdateEvents() {
         sf::FloatRect visibleArea(0.f, 0.f, (float) sfEvent.size.width, (float) sfEvent.size.height);
         this->window->setView(sf::View(visibleArea));
     }
+
+    while (this->leaderboard->pollEvent(this->sfEvent)) {
+        if (this->sfEvent.type == sf::Event::Closed) {
+            this->leaderboard->close();
+        }
+    }
 }
 
 void Game::update() {
@@ -111,13 +113,11 @@ void Game::update() {
     *time1 = clock1->getElapsedTime().asSeconds();
 
     this->player1->updateInputKeys(dt);
-    if (tiled->collitionCheck(player1->getSprite().getGlobalBounds())) {
+    if (tiled->collisionCheck(player1->getSprite().getGlobalBounds())) {
         player1->goBack();
     }
 
     this->updateGUI();
-
-    //this->tiled->collisionCheck("assets/map2.tmx",tPlayer,enemies);
 
     playerZombie(enemies1, *player1);
 
@@ -182,7 +182,7 @@ void Game::update() {
                 multimedia.shot.play();
                 clock1->restart();
                 this->charger.pop();
-                cout << charger.size() << endl;
+
 
             }
         }
@@ -196,6 +196,8 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
         for (int i = 0; i < bullets.getSize(); ++i) {
             if (bullets.get(i)->getSprite().getGlobalBounds().intersects(
                     enemies.get(j)->getSprite().getGlobalBounds())) {
+
+
                 if (!this->multimedia.zombie_bullet_buffer.loadFromFile("assets/zombiegrr.wav")) {
                     cout << "No se pudo cargar el audio" << endl;
                 }
@@ -203,13 +205,14 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
                 this->multimedia.zombie_bullet.setVolume(50);
                 this->multimedia.zombie_bullet.play();
                 enemies.get(j)->setHpmax(enemies.get(j)->getHpmax() - bullets.get(i)->get_Damage());
+                enemies.get(j)->setSpeed(enemies.get(j)->getSpeed() + 40.f);
                 delete bullets.get(i);
                 bullets.remove(i);
                 if (enemies.get(j)->getHpmax() == 0) {
                     this->points += enemies.get(j)->getPoints();
-                    cout << points << endl;
                     delete enemies.get(j);
                     enemies.remove(j);
+
                 }
             }
         }
@@ -262,6 +265,7 @@ void Game::render() {
     this->window->clear();
 
     if (this->player1->getHp() > 0) {
+
         this->tiled->dibujar(*window);
         player1->getSprite().setScale(0.5f, 0.5f);
         sf::Vector2f cPos = player1->getSprite().getPosition();
@@ -285,7 +289,7 @@ void Game::render() {
         window->setView(view);
 
         this->window->draw(player1->getSprite());
-        
+
 
         for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
             this->window->draw(enemies1.iterGet()->getSprite());
@@ -309,22 +313,71 @@ void Game::render() {
 
         this->renderGUI();
 
-    } else {
-        this->window->draw(this->gameOverText);
-        ofstream leaderboard;
-        leaderboard.open("Leaderboard.txt", ios::app);
-        leaderboard << "Ultima Partida" << "\n" << "Puntos: " << points << "\n" << "Tiempo: "
-                    << gameTime.getElapsedTime().asSeconds() << " Segundos " << endl;
-        leaderboard << endl;
-        leaderboard.close();
+        cout << enemies1.getSize() << endl;
 
     }
     this->window->display();
 }
 
+void Game::renderLeaderboard() {
+    leaderboard->clear();
+
+    sf::Event rollEvent;
+
+    this->leaderboardBack.loadFromFile("assets/mainmenu.png");
+    this->sleaderboardBack.setTexture(leaderboardBack);
+    this->sleaderboardBack.setScale(1.28, 1.13);
+    this->leaderboard->draw(sleaderboardBack);
+
+    this->gameOverText.setFont(this->font);
+    this->gameOverText.setCharacterSize(150);
+    this->gameOverText.setFillColor(sf::Color::White);
+    this->gameOverText.setString("GAME OVER");
+    this->gameOverText.setOrigin(this->gameOverText.getGlobalBounds().width / 2,
+                                 this->gameOverText.getGlobalBounds().height / 2);
+    this->gameOverText.setPosition(leaderboard->getSize().x / 2, leaderboard->getSize().y / 10);
+
+
+    this->leaderboard->draw(this->gameOverText);
+
+    ifstream game;
+    std::string oldData;
+    game.open("Leaderboard.txt");
+    if (game.is_open()) {
+        while (!game.eof()) {
+            oldData += game.get();
+        }
+        game >> oldData;
+        game.close();
+    }
+    this->Olddata.setString(oldData);
+    Olddata.setFont(font);
+    Olddata.setCharacterSize(50);
+    Olddata.setFillColor(sf::Color::White);
+    Olddata.setPosition(leaderboard->getSize().x / 6, leaderboard->getSize().y / 4);
+
+    /*while (leaderboard->pollEvent(rollEvent)) {
+
+        if (rollEvent.type == sf::Event::KeyPressed)
+            if (rollEvent.key.code == sf::Keyboard::Up) {
+                gameOverText.move(0,-20);
+                Olddata.move(0,-20);
+
+            }
+            if (rollEvent.key.code == sf::Keyboard::Down) {
+                gameOverText.move(0.f,20.f);
+                Olddata.move(0.f,20.f);
+            }*/
+
+    this->leaderboard->draw(Olddata);
+
+    leaderboard->display();
+}
+
+
 void Game::run() {
     while (this->window->isOpen()) {
-        if (this->player1->getHp() > 0) {
+        if (this->player1->getHp() > 0 && enemies1.getSize() != 0) {
             //Update clock
             this->updateDt();
 
@@ -336,25 +389,39 @@ void Game::run() {
 
             //Render frame
             this->render();
+        } else {
+            this->window->close();
+        }
+    }
+    while (this->leaderboard->isOpen()) {
 
-        } else if (this->player1->getHp() <= 0) {
+        if (this->player1->getHp() <= 0 || enemies1.getSize() == 0) {
+
+            this->SFMLUpdateEvents();
+
+            this->renderLeaderboard();
+
             this->multimedia.background.stop();
-
-            if(elapsedTime == 0){
+            if (elapsedTime == 0) {
+                gametime = gameTime.getElapsedTime().asSeconds();
                 if (!this->multimedia.final.openFromFile("assets/death_final_1.ogg")) {
                     cout << "No se pudo cargar el audio" << endl;
                 }
-                this->multimedia.final.setVolume(75);
+                this->multimedia.final.setVolume(1.f);
                 this->multimedia.final.play();
                 elapsedTime = 1;
-            }
+                ofstream game;
+                game.open("Leaderboard.txt", ios::app);
+                game << "Datos de Partida" << "\n" << "Puntos: " << points << "\n" << "Tiempo: "
+                     << gametime << " Segundos " << endl;
+                game << endl;
+                game.close();
 
-            elapsedTime++;
-            cout << this->elapsedTime << endl;
-            if (this->elapsedTime > 10000) {
-                this->window->close();
             }
         }
     }
 }
+
+
+
 

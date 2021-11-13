@@ -8,7 +8,7 @@ void Enemies::initVariables()
 
     this->points     = 5;
     this->hpMax = 80.f;
-    this->damage = 0.5f;
+    this->damage = 0.7f;
     this->movementSpeed = 100.f;
 }
 
@@ -36,6 +36,14 @@ sf::Sprite &Enemies::getSprite() {
 
 sf::Texture &Enemies::getTexture() {
     return *tEnemy;
+}
+
+void Enemies::setSpeed(float s) {
+    movementSpeed = s;
+}
+
+float &Enemies::getSpeed() {
+    return movementSpeed;
 }
 
 void Enemies::setHpmax(float hp) {

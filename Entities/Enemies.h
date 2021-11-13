@@ -32,12 +32,14 @@ public:
 
     const int& getPoints() const;
     const float& getDamage() const;
+    float& getSpeed();
 
     float getHpmax();
     //player position
     void move (const float& dt,float x,float y);
     //Setters
     void setHpmax (float);
+    void setSpeed (float);
 };
 
 

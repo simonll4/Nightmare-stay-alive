@@ -28,6 +28,8 @@ private:
     //Variables
     sf::RenderWindow *window;
     sf::RenderWindow *leaderboard;
+    sf::Texture leaderboardBack;
+    sf::Sprite sleaderboardBack;
     sf::Event sfEvent;
     Player* player1;
     queue<Enemies*> enemies;
@@ -46,6 +48,8 @@ private:
     //GUI
     sf::Font font;
     sf::Text pointText;
+    sf::Text GameTime;
+    sf::Text Olddata;
 
    //text
     sf::Text gameOverText;
@@ -60,6 +64,7 @@ private:
     sf::Clock * clock1;
     float * time1;
     sf::Clock gameTime;
+    float gametime;
 
     //Initialize
     void initializeWindow();
@@ -89,6 +94,8 @@ public:
     void updateGUI();
 
     void render();
+
+    void renderLeaderboard();
 
     void renderGUI();
 
