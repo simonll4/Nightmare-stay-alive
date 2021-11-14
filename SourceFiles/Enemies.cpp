@@ -5,6 +5,7 @@ void Enemies::initVariables()
 {
     srand(time(NULL));
 
+    this->animState = ENEMY_ANIMATION_STATES::MOVE;
 
     this->points     = 5;
     this->hpMax = 80.f;
@@ -17,13 +18,17 @@ Enemies::Enemies() {
     tEnemy = new sf::Texture;
     sEnemy = new sf::Sprite;
 
-    tEnemy->loadFromFile("assets/enemy.png");
+    tEnemy->loadFromFile("assets/zombie_sheet(fin).png");
     sEnemy->setTexture(*tEnemy);
 
-    sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);
+    //sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);
+
+    this->currentFrame = sf::IntRect(0,0,220,220);
+    this->sEnemy->setTextureRect(sf::IntRect(this->currentFrame));
 
 
     this->initVariables();
+    this->initAnimations();
 
 }
 Enemies::~Enemies() {
@@ -62,15 +67,23 @@ void Enemies::move (const float& dt, float y, float x){
 
     if(this->getSprite().getPosition().x < x){
         this->sEnemy->move(1.f * this->movementSpeed * dt, 0.f * this->movementSpeed * dt);
+        if(this->animState != ENEMY_ANIMATION_STATES::ATTACK)
+            this->animState = ENEMY_ANIMATION_STATES::MOVE;
     }
     if(this->getSprite().getPosition().x > x){
         this->sEnemy->move(-1.f * this->movementSpeed * dt, 0.f * this->movementSpeed * dt);
+        if(this->animState != ENEMY_ANIMATION_STATES::ATTACK)
+            this->animState = ENEMY_ANIMATION_STATES::MOVE;
     }
     if(this->getSprite().getPosition().y < y){
         this->sEnemy->move(0.f * this->movementSpeed * dt, 1.f * this->movementSpeed * dt);
+        if(this->animState != ENEMY_ANIMATION_STATES::ATTACK)
+            this->animState = ENEMY_ANIMATION_STATES::MOVE;
     }
     if(this->getSprite().getPosition().y > y){
         this->sEnemy->move(-0.f * this->movementSpeed * dt, -1.f * this->movementSpeed * dt);
+        if(this->animState != ENEMY_ANIMATION_STATES::ATTACK)
+            this->animState = ENEMY_ANIMATION_STATES::MOVE;
     }
 
     posX = x - this->sEnemy->getPosition().x;
@@ -79,6 +92,8 @@ void Enemies::move (const float& dt, float y, float x){
 
     this->sEnemy->setRotation(angle);
 
+    if(this->animState != ENEMY_ANIMATION_STATES::ATTACK)
+        this->animState = ENEMY_ANIMATION_STATES::MOVE;
 }
 
 const int &Enemies::getPoints() const{
@@ -89,6 +104,51 @@ const float &Enemies::getDamage() const
 {
     return this->damage;
 }
+
+void Enemies::initAnimations()
+{
+    this->animationTimer.restart();
+}
+
+void Enemies::animAttack()
+{
+    this->animState = ENEMY_ANIMATION_STATES::ATTACK;
+}
+
+void Enemies::updateAnimations()
+{
+    if (this->animState == ENEMY_ANIMATION_STATES::ATTACK)
+    {
+        if(this->animationTimer.getElapsedTime().asSeconds() >= 0.02f)
+        {
+            this->currentFrame.top = 0.f;
+            this->currentFrame.left += 220.f;
+            if(this->currentFrame.left >= 1980.f)
+                this->currentFrame.left = 0;
+
+            this->animationTimer.restart();
+            this->sEnemy->setTextureRect(this->currentFrame);
+        }
+        this->animState = ENEMY_ANIMATION_STATES::MOVE;
+    }
+
+    if(this->animState == ENEMY_ANIMATION_STATES::MOVE)
+    {
+        if(this->animationTimer.getElapsedTime().asSeconds() >= 0.030f)
+        {
+            this->currentFrame.top = 220.f;
+            this->currentFrame.left += 220.f;
+            if(this->currentFrame.left >= 3740.f)
+                this->currentFrame.left = 0;
+
+            this->animationTimer.restart();
+            this->sEnemy->setTextureRect(this->currentFrame);
+        }
+    }
+    else
+        this->animationTimer.restart();
+}
+
 
 
 

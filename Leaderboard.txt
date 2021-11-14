@@ -50,3 +50,35 @@ Datos de Partida
 Puntos: 0
 Tiempo: 12.9478 Segundos 
 
+Datos de Partida
+Puntos: 5
+Tiempo: 19.5618 Segundos 
+
+Datos de Partida
+Puntos: 25
+Tiempo: 36.9047 Segundos 
+
+Datos de Partida
+Puntos: 0
+Tiempo: 30.619 Segundos 
+
+Datos de Partida
+Puntos: 60
+Tiempo: 108.547 Segundos 
+
+Datos de Partida
+Puntos: 0
+Tiempo: 16.9726 Segundos 
+
+Datos de Partida
+Puntos: 0
+Tiempo: 33.1378 Segundos 
+
+Datos de Partida
+Puntos: 10
+Tiempo: 34.1392 Segundos 
+
+Datos de Partida
+Puntos: 0
+Tiempo: 21.2315 Segundos 
+

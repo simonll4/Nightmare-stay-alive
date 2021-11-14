@@ -77,13 +77,16 @@ public:
                     if (objects[j].getName() == "player") {
                         player = new Player(pl_tx);
                         player->getSprite().setPosition(objects[j].getPosition().x, objects[j].getPosition().y);
+
+
                     }
                     if (objects[j].getName() == "zombies") {
                         auto *enemy = new Enemies();
                         enemy->getSprite().setPosition(objects[j].getPosition().x, objects[j].getPosition().y);
-                        enemy->getSprite().setScale(0.5f, 0.5f);
-                        enemy->getSprite().setOrigin((float) enemy->getTexture().getSize().x / 2,
-                                                     (float) enemy->getTexture().getSize().y / 2);
+                        enemy->getSprite().setScale(0.8f, 0.8f);
+                        //enemy->getSprite().setOrigin((float) enemy->getTexture().getSize().x / 2,
+                          //                           (float) enemy->getTexture().getSize().y / 2);
+                          enemy->getSprite().setOrigin(110.f, 110.f);
                         enemies.push(enemy);
 
 

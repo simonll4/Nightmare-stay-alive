@@ -32,7 +32,7 @@ void Game::initializeWindow() {
     if (!multimedia.background.openFromFile("assets/backgroundMusic.ogg")) {
         cout << "No se pudo cargar la musica" << endl;
     }
-    multimedia.background.setVolume(1.f);
+    multimedia.background.setVolume(5);
     multimedia.background.setLoop(true);
     multimedia.background.play();
 
@@ -41,15 +41,18 @@ void Game::initializeWindow() {
             cout << "No se pudo cargar el audio" << endl;
         }
         this->multimedia.background.stop();
-        this->multimedia.final.setVolume(75);
+        this->multimedia.final.setVolume(100);
         this->multimedia.final.setLoop(true);
         this->multimedia.final.play();
     }
+
+    this->player1->getSprite().setScale(2.0f, 2.0f);
 }
 
 //Constructor
 Game::Game() {
-    tPlayer.loadFromFile("assets/text_base.png");
+    tPlayer.loadFromFile("assets/player_s_fin.png");
+
     this->initializeWindow();
     this->initGUI();
     this->initSystems();
@@ -94,7 +97,20 @@ void Game::SFMLUpdateEvents() {
     while (this->window->pollEvent(this->sfEvent)) {
         if (this->sfEvent.type == sf::Event::Closed)
             this->window->close();
+
+        if(this->sfEvent.type == sf::Event::KeyReleased &&
+        (this->sfEvent.key.code == sf::Keyboard::A||
+        this->sfEvent.key.code == sf::Keyboard::D ||
+        this->sfEvent.key.code == sf::Keyboard::W ||
+        this->sfEvent.key.code == sf::Keyboard::S ||
+        this->sfEvent.key.code == sf::Keyboard::Space ||
+        this->sfEvent.key.code == sf::Keyboard::R))
+        {
+            this->player1->resetAnimationTimer();
+        }
     }
+
+
     if (sfEvent.type == sf::Event::Resized) {
         // update the view to the new size of the window
         sf::FloatRect visibleArea(0.f, 0.f, (float) sfEvent.size.width, (float) sfEvent.size.height);
@@ -112,10 +128,12 @@ void Game::update() {
 
     *time1 = clock1->getElapsedTime().asSeconds();
 
-    this->player1->updateInputKeys(dt);
+    this->player1->updateInputKeys(dt, false);
     if (tiled->collisionCheck(player1->getSprite().getGlobalBounds())) {
         player1->goBack();
     }
+
+    this->player1->update();
 
     this->updateGUI();
 
@@ -123,8 +141,11 @@ void Game::update() {
 
     bulletZombie(enemies1, bullets);
 
+
+
     for (enemies1.iterInit(); !enemies1.iterEnd(); enemies1.iterNext()) {
         enemies1.iterGet()->move(dt, player1->getSprite().getPosition().y, player1->getSprite().getPosition().x);
+        this->enemies1.iterGet()->updateAnimations();
     }
 
     this->player1->updateMouseCamera(this->window);
@@ -161,6 +182,9 @@ void Game::update() {
             }
             multimedia.reload_shout.setBuffer(multimedia.reload_shout_b);
             multimedia.reload_shout.play();
+
+            this->player1->updateInputKeys(dt, true);
+
             for (int i = 0; i < 17; ++i) {
                 charger.push(1);
             }
@@ -222,6 +246,7 @@ void Game::bulletZombie(LinkedList<Enemies *> &enemies, LinkedList<Bullet *> &bu
 void Game::playerZombie(LinkedList<Enemies *> &enemies1, Player player1) {
     for (int i = 0; i < enemies1.getSize(); ++i) {
         if (player1.getSprite().getGlobalBounds().intersects(enemies1.get(i)->getSprite().getGlobalBounds())) {
+            this->enemies1.get(i)->animAttack();
             this->player1->loseHp(0.2f);
         }
     }
@@ -267,7 +292,7 @@ void Game::render() {
     if (this->player1->getHp() > 0) {
 
         this->tiled->dibujar(*window);
-        player1->getSprite().setScale(0.5f, 0.5f);
+        player1->getSprite().setScale(0.8f, 0.8f);
         sf::Vector2f cPos = player1->getSprite().getPosition();
 
         //Map setting
@@ -312,9 +337,6 @@ void Game::render() {
         }
 
         this->renderGUI();
-
-        cout << enemies1.getSize() << endl;
-
     }
     this->window->display();
 }

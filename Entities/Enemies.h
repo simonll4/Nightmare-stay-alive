@@ -4,6 +4,8 @@
 #include "SFML/Graphics.hpp"
 #include <time.h>
 
+enum ENEMY_ANIMATION_STATES {MOVE = 0, ATTACK};
+
 class Enemies {
 private:
 
@@ -15,6 +17,13 @@ private:
     float movementSpeed;
     int points;
     unsigned pointCount;
+
+    //Animation
+    sf::Clock animationTimer;
+    short animState;
+    sf::IntRect currentFrame;
+    bool animationSwitch;
+    void initAnimations();
 
     //InitVariables
     void initVariables();
@@ -33,6 +42,10 @@ public:
     const int& getPoints() const;
     const float& getDamage() const;
     float& getSpeed();
+
+    //Anim
+    void updateAnimations();
+    void animAttack();
 
     float getHpmax();
     //player position

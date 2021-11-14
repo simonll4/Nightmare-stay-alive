@@ -4,6 +4,8 @@
 
 #include "SFML/Graphics.hpp"
 
+enum PLAYER_ANIMATION_STATES {IDLE, MOVING, RELOAD, SHOOT};
+
 class Player {
 private:
     sf::Sprite *sPlayer;
@@ -13,6 +15,14 @@ private:
     double a{}, b{};
     float angle;
     float movementSpeed;
+
+    //Animation
+    sf::Clock animationTimer;
+    short animState;
+    sf::IntRect currentFrame;
+    bool animationSwitch;
+    void initAnimations();
+    bool reload;
 
     //Core
     float hp;
@@ -25,11 +35,17 @@ public:
     explicit Player(sf::Texture &tPlayer);
     ~Player();
 
+    //Accesor
+    const bool& getAnimSwitch();
+
     //Movement functions of player
     void move(const float& dt, float x, float y);
-    void updateInputKeys(const float& dt);
+    void updateInputKeys(const float& dt, bool reload);
     void updateMouseCamera(sf::RenderWindow*);
 
+    //Anim
+    void resetAnimationTimer();
+    void updateAnimations();
 
     //Carga de texturas del player
     sf::Sprite &getSprite ();
@@ -45,6 +61,9 @@ public:
     void setMovementSpeed (float);
 
     void goBack();
+
+    //update
+    void update();
 };
 
 
