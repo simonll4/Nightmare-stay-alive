@@ -106,6 +106,8 @@ public:
         for (sprites.iterInit(); !sprites.iterEnd(); sprites.iterNext()) {
             w.draw(*sprites.iterGet());
         }
+
+
     }
 
     Player *getPlayer() {

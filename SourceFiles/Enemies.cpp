@@ -1,6 +1,8 @@
 #include "../Entities/Enemies.h"
 #include <cmath>
 
+////////////// INITIALIZERS //////////////
+
 void Enemies::initVariables()
 {
     srand(time(NULL));
@@ -13,12 +15,14 @@ void Enemies::initVariables()
     this->movementSpeed = 100.f;
 }
 
+////////////// CONSTRUCTOR ////////////////
+
 Enemies::Enemies() {
 
     tEnemy = new sf::Texture;
     sEnemy = new sf::Sprite;
 
-    tEnemy->loadFromFile("assets/zombie_sheet(fin).png");
+    tEnemy->loadFromFile("assets/Enemy/zombie_sheet(fin).png");
     sEnemy->setTexture(*tEnemy);
 
     //sEnemy->setOrigin(((float)sEnemy->getTexture()->getSize().x)/2,((float)sEnemy->getTexture()->getSize().y)/2);
@@ -31,33 +35,44 @@ Enemies::Enemies() {
     this->initAnimations();
 
 }
+
+////////////// DESTRUCTOR ////////////////
+
 Enemies::~Enemies() {
 
 }
+
+////////////// GETTERS //////////////
 
 sf::Sprite &Enemies::getSprite() {
     return *sEnemy;
 }
 
-sf::Texture &Enemies::getTexture() {
-    return *tEnemy;
+////////////// GETTERS //////////////
+
+float &Enemies::getSpeed() {
+    return movementSpeed;
+}
+
+float Enemies::getHpmax (){
+    return hpMax;
+}
+
+const int &Enemies::getPoints() const{
+    return this->points;
+}
+
+////////////// SETTERS //////////////
+
+void Enemies::setHpmax(float hp) {
+    hpMax = hp;
 }
 
 void Enemies::setSpeed(float s) {
     movementSpeed = s;
 }
 
-float &Enemies::getSpeed() {
-    return movementSpeed;
-}
-
-void Enemies::setHpmax(float hp) {
-    hpMax = hp;
-}
-
-float Enemies::getHpmax (){
-    return hpMax;
-}
+////////////// FUNCTIONS //////////////
 
 void Enemies::move (const float& dt, float y, float x){
 
@@ -96,14 +111,7 @@ void Enemies::move (const float& dt, float y, float x){
         this->animState = ENEMY_ANIMATION_STATES::MOVE;
 }
 
-const int &Enemies::getPoints() const{
-    return this->points;
-}
-
-const float &Enemies::getDamage() const
-{
-    return this->damage;
-}
+////////////// ANIMATIONS //////////////
 
 void Enemies::initAnimations()
 {
@@ -148,8 +156,6 @@ void Enemies::updateAnimations()
     else
         this->animationTimer.restart();
 }
-
-
 
 
 

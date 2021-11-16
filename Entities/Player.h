@@ -8,10 +8,14 @@ enum PLAYER_ANIMATION_STATES {IDLE, MOVING, RELOAD, SHOOT};
 
 class Player {
 private:
+
+    //SFML Variables
     sf::Sprite *sPlayer;
     sf::Vector2i mouse;
     sf::Vector2f playerPos;
     sf::Vector2f oldPlayerPos;
+
+    //Variables
     double a{}, b{};
     float angle;
     float movementSpeed;
@@ -21,7 +25,9 @@ private:
     short animState;
     sf::IntRect currentFrame;
     bool animationSwitch;
+
     void initAnimations();
+
     bool reload;
 
     //Core
@@ -33,38 +39,43 @@ private:
 public:
     //Constructors Destructors
     explicit Player(sf::Texture &tPlayer);
+
     ~Player();
 
     //Accesor
-    const bool& getAnimSwitch();
+    const bool &getAnimSwitch();
 
     //Movement functions of player
-    void move(const float& dt, float x, float y);
-    void updateInputKeys(const float& dt, bool reload);
-    void updateMouseCamera(sf::RenderWindow*);
+    void move(const float &dt, float x, float y);
+
+    void updateInputKeys(const float &dt, bool reload);
+
+    void updateMouseCamera(sf::RenderWindow *);
 
     //Anim
     void resetAnimationTimer();
+
     void updateAnimations();
 
-    //Carga de texturas del player
-    sf::Sprite &getSprite ();
-    float getAngle () const;
+    //Getters
+    sf::Sprite &getSprite();
+
+    float getAngle() const;
 
     //Accesors
-    const float& getHp() const;
-    const float& getHpMax() const;
+    const float &getHp() const;
+
+    const float &getHpMax() const;
+
     void setHp(const float hp);
+
     void loseHp(const float value);
 
-    //Setters
-    void setMovementSpeed (float);
-
+    //Functions
     void goBack();
 
     //update
     void update();
 };
-
 
 #endif //MAIN_CPP_PLAYER_H
