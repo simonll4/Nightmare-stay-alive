@@ -41,7 +41,7 @@ https://opengameart.org/content/animated-top-down-zombie
 ## Capturas
 
 ![Screenshot_1](assets/Game/Nightmare.png)
-![Screenshot_1](assets/Game/screenshot_1.png)
-![Screenshot_1](assets/Game/screenshot_2.png)
-![Screenshot_1](assets/Game/screenshot_3.png)
-![Screenshot_1](assets/Game/screenshot_4.png)
+![Screenshot_2](assets/Game/screenshot_1.png)
+![Screenshot_3](assets/Game/screenshot_2.png)
+![Screenshot_4](assets/Game/screenshot_3.png)
+![Screenshot_5](assets/Game/screenshot_4.png)
